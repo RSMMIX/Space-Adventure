@@ -2,14 +2,16 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Enemy.h"
-#include<vector>
+#include "Background.h"
+#include <vector>
 int main()
 {
 	srand(time_t(static_cast<unsigned>(0)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
 	vector < Bullet > ammunition;
 	vector < Enemy > enemies;
-	
+	Background background;
+
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
 	Player rocket(spaceship);
@@ -20,30 +22,8 @@ int main()
 	Texture enemy;
 	enemy.loadFromFile("textures/Enemy/enemies.png");
 	
-	Texture bg;
-	bg.loadFromFile("textures/Bg/bg1.jpg");
-	RectangleShape background;
-	background.setSize(Vector2f(1920, 1080));
-	background.setTexture(&bg);
-
-	/*Sprite sprite(bg);
-	sprite.setPosition(0, 0);
-	Shader parallaxShader;
-	parallaxShader.loadFromMemory
-	("uniform float offset;"
-
-		"void main() {"
-		"    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;"
-		"    gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
-		"    gl_TexCoord[0].x = gl_TexCoord[0].x + offset;" // magic
-		"    gl_FrontColor = gl_Color;"
-		"}"
-		,Shader::Vertex);
-	float offset = 0.f;*/
-	
-
 	float speed = 150.f;
-
+	float showtime = 0.0f;
 	Clock clock;
 	float deltaTime = 0;
 	float sumtime = 0;
@@ -52,6 +32,7 @@ int main()
 	{
 		deltaTime = clock.restart().asSeconds();
 		sumtime += deltaTime;
+		showtime += deltaTime;
 		bullettime += deltaTime;
 		Event ev;
 		while (window.pollEvent(ev))
@@ -67,22 +48,24 @@ int main()
 			}
 		}
 	
-		//parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() / 10);
 		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
 		{
 			bullettime -= 0.1f;
 			ammunition.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
 		}
-		if (sumtime >= 5.0f)
+		if (sumtime >= 5.0f && showtime >= 12.0f)
 		{
 			sumtime -= 5.0f;
 			enemies.push_back(Enemy(&enemy));
-
 		}
 		
 
 		// ↓ Update
-		rocket.update(deltaTime);
+		background.update(deltaTime);
+		if (showtime >= 12.0f)
+		{
+			rocket.update(deltaTime);
+		}
 
 		for (Bullet& Fbullet : ammunition)
 		{
@@ -95,10 +78,11 @@ int main()
 		}
 
 		window.clear();
-		window.draw(background);
-		//window.draw(sprite, &parallaxShader);
+		//window.draw(background);
+		
 
 		// ↓ Draw
+		background.draw(window);
 
 		for (Bullet& Fbullet: ammunition)
 		{

@@ -5,7 +5,7 @@ Enemy::Enemy(Texture* spaceship)
 	spacecraft.setTexture(spaceship);
 	spacecraft.setSize(Vector2f(80.0f, 80.0f));
 	spacecraft.setOrigin(40.0f, 40.0f);
-	random = rand() % 4;
+	random = rand() % 10;
 	if (random == 0)
 	{
 		//บน
