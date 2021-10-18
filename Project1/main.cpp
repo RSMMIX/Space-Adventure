@@ -21,11 +21,26 @@ int main()
 	enemy.loadFromFile("textures/Enemy/enemies.png");
 	
 	Texture bg;
-	bg.loadFromFile("textures/Bg/bg5.jpg");
+	bg.loadFromFile("textures/Bg/bg1.jpg");
 	RectangleShape background;
 	background.setSize(Vector2f(1920, 1080));
 	background.setTexture(&bg);
 
+	/*Sprite sprite(bg);
+	sprite.setPosition(0, 0);
+	Shader parallaxShader;
+	parallaxShader.loadFromMemory
+	("uniform float offset;"
+
+		"void main() {"
+		"    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;"
+		"    gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
+		"    gl_TexCoord[0].x = gl_TexCoord[0].x + offset;" // magic
+		"    gl_FrontColor = gl_Color;"
+		"}"
+		,Shader::Vertex);
+	float offset = 0.f;*/
+	
 
 	float speed = 150.f;
 
@@ -43,9 +58,16 @@ int main()
 		{
 			if (ev.type == Event::Closed)
 			{
-				window.close();
+				switch (ev.type)
+				{
+				case Event::Closed:
+					window.close();
+					break;
+				}
 			}
 		}
+	
+		//parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() / 10);
 		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
 		{
 			bullettime -= 0.1f;
@@ -57,6 +79,8 @@ int main()
 			enemies.push_back(Enemy(&enemy));
 
 		}
+		
+
 		// ↓ Update
 		rocket.update(deltaTime);
 
@@ -72,6 +96,7 @@ int main()
 
 		window.clear();
 		window.draw(background);
+		//window.draw(sprite, &parallaxShader);
 
 		// ↓ Draw
 
