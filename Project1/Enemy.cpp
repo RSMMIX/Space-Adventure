@@ -1,11 +1,16 @@
 ﻿#include "Enemy.h"
 
-Enemy::Enemy(Texture* spaceship)
+Enemy::Enemy(Texture* spaceship, int MaxHp, int Hp)
 {
+	this->Maxhp = Maxhp;
+	this->Hp = Hp;
+
 	spacecraft.setTexture(spaceship);
 	spacecraft.setSize(Vector2f(80.0f, 80.0f));
 	spacecraft.setOrigin(40.0f, 40.0f);
-	random = rand() % 10;
+	random = rand() % 4;
+
+	
 	if (random == 0)
 	{
 		//บน

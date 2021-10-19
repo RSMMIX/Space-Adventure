@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player(Texture &spaceship)
 {
 	spacecraft.setTexture(spaceship);
@@ -14,6 +13,7 @@ Player::Player(Texture &spaceship)
 
 Player::~Player()
 {
+
 }
 
 void Player::update(float deltaTime)

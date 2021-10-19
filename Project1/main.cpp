@@ -8,7 +8,7 @@ int main()
 {
 	srand(time_t(static_cast<unsigned>(0)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
-	vector < Bullet > ammunition;
+	vector < Bullet > bullets;
 	vector < Enemy > enemies;
 	Background background;
 
@@ -19,9 +19,10 @@ int main()
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
-	Texture enemy;
-	enemy.loadFromFile("textures/Enemy/enemies.png");
-	
+	Texture enemy[3];
+	enemy[0].loadFromFile("textures/Enemy/enemies.png");
+	enemy[1].loadFromFile("textures/Enemy/skeletaldragonpj.png");
+	enemy[2].loadFromFile("textures/Enemy/meteorite.png");
 	float speed = 150.f;
 	float showtime = 0.0f;
 	Clock clock;
@@ -50,41 +51,55 @@ int main()
 	
 		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
 		{
-			bullettime -= 0.1f;
-			ammunition.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
+			bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
+			bullettime = 0.f;
 		}
-		if (sumtime >= 5.0f && showtime >= 12.0f)
+		if (sumtime >= 2.0f)
 		{
-			sumtime -= 5.0f;
-			enemies.push_back(Enemy(&enemy));
+			enemies.push_back(Enemy(&enemy[rand() % 3 ], 10,10));
+			sumtime = 0.f;
 		}
-		
-
+	
 		// ↓ Update
 		background.update(deltaTime);
-		if (showtime >= 12.0f)
+
+		rocket.update(deltaTime);
+		for (size_t i = 0; i < enemies.size(); i++)
 		{
-			rocket.update(deltaTime);
+			enemies[i].update(deltaTime, rocket.spacecraft.getPosition());
+			if (enemies[i].getHp() <= 0)
+			{
+				enemies.erase(enemies.begin() + i);
+				break;
+			}
+			for (size_t j = 0; j < bullets.size(); j++)
+			{
+				if (enemies[i].getGlobalBounds().intersects(bullets[j].getGlobalBounds()))
+				{
+					enemies[i].setHp(1);
+					bullets.erase(bullets.begin() + j);
+					break;
+				}	
+			}
+			if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+			{
+				enemies.erase(enemies.begin() + i);
+				break;
+			}
 		}
 
-		for (Bullet& Fbullet : ammunition)
+		for (Bullet& Fbullet : bullets)
 		{
 			Fbullet.update(deltaTime);
 		}
 
-		for (Enemy& Fenemy : enemies)
-		{
-			Fenemy.update(deltaTime,rocket.spacecraft.getPosition());
-		}
-
 		window.clear();
 		//window.draw(background);
-		
 
 		// ↓ Draw
 		background.draw(window);
 
-		for (Bullet& Fbullet: ammunition)
+		for (Bullet& Fbullet: bullets)
 		{
 			Fbullet.draw(window);
 		}
