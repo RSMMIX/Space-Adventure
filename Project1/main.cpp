@@ -3,14 +3,17 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Background.h"
+#include "Animation.h"
 #include <vector>
 int main()
 {
 	srand(time_t(static_cast<unsigned>(0)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
+	//RectangleShape enemys(Vector2f(100.0f, 150.0f));
 	vector < Bullet > bullets;
 	vector < Enemy > enemies;
 	Background background;
+	//vector <Animation> animation;
 
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
@@ -23,6 +26,14 @@ int main()
 	enemy[0].loadFromFile("textures/Enemy/enemies.png");
 	enemy[1].loadFromFile("textures/Enemy/skeletaldragonpj.png");
 	enemy[2].loadFromFile("textures/Enemy/meteorite.png");
+
+	//Texture animations;
+	//animations.loadFromFile("textures/Fx/Fx1.png");
+	//enemys.setTexture(&animations);
+
+	//Animation animation(&animations,Vector2u(3,3), 0.3f);
+
+	
 	float speed = 150.f;
 	float showtime = 0.0f;
 	Clock clock;
@@ -48,7 +59,7 @@ int main()
 				}
 			}
 		}
-	
+
 		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
 		{
 			bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
@@ -56,10 +67,10 @@ int main()
 		}
 		if (sumtime >= 2.0f)
 		{
-			enemies.push_back(Enemy(&enemy[rand() % 3 ], 10,10));
+			enemies.push_back(Enemy(&enemy[rand() % 3], 10, 10));
 			sumtime = 0.f;
 		}
-	
+
 		// ↓ Update
 		background.update(deltaTime);
 
@@ -79,7 +90,7 @@ int main()
 					enemies[i].setHp(1);
 					bullets.erase(bullets.begin() + j);
 					break;
-				}	
+				}
 			}
 			if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
@@ -93,8 +104,11 @@ int main()
 			Fbullet.update(deltaTime);
 		}
 
+		//animation.update(0, deltaTime);
+		//enemys.setTextureRect(animation.uvRect);
+
 		window.clear();
-		//window.draw(background);
+		
 
 		// ↓ Draw
 		background.draw(window);
