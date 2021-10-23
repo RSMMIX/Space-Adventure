@@ -6,7 +6,7 @@ class Enemy
 public:
 	Enemy(Texture* spaceship, int Hp, int level);
 	~Enemy();
-
+	
 	RectangleShape spacecraft;
 	RectangleShape denemy;
 

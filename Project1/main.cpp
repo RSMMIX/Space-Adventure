@@ -136,7 +136,7 @@ int main()
 		{
 			Fenemy.draw(window);
 		}
-
+		
 		rocket.draw(window);
 
 		window.display();
