@@ -20,9 +20,9 @@ int main()
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
 	Texture enemy[3];
-	enemy[0].loadFromFile("textures/Enemy/enemies.png");
-	enemy[1].loadFromFile("textures/Enemy/skeletaldragonpj.png");
-	enemy[2].loadFromFile("textures/Enemy/meteorite.png");
+	enemy[0].loadFromFile("textures/Enemy/e1.png");
+	enemy[1].loadFromFile("textures/Enemy/e2.png");
+	enemy[2].loadFromFile("textures/Enemy/e3.png");
 
 	float speed = 150.f;
 	float showtime = 0.0f;
@@ -72,6 +72,9 @@ int main()
 				break;
 
 			case 3:
+				type = 3;
+				break;
+			default :
 				type = 3;
 				break;
 			}
