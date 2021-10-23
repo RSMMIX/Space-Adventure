@@ -25,4 +25,3 @@ private:
 	Vector2f position;
 
 };
-

@@ -1,6 +1,6 @@
-#include "Player.h"
+﻿#include "Player.h"
 
-Player::Player(Texture &spaceship)
+Player::Player(Texture &spaceship , float Hp)
 {
 	spacecraft.setTexture(spaceship);
 	spacecraft.setPosition(Vector2f(960, 840));
@@ -9,6 +9,9 @@ Player::Player(Texture &spaceship)
 	spacecraft.rotate(0);
 	momentum = 200.0f;
 	speed = 200.0f;
+	this->Maxhp = Hp;
+	this->Hp = Hp;
+	Hpbulb.setFillColor(Color(255, 0, 0));
 }
 
 Player::~Player()
@@ -58,10 +61,32 @@ void Player::update(float deltaTime)
 		spacecraft.rotate(deltaTime * momentum);
 	}
 	spacecraft.move(direction * speed * deltaTime);
+
+
+	float Hpbar = this->Hp / this->Maxhp;
+	Hpbulb.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
+	Hpbulb.setPosition(Vector2f(spacecraft.getPosition().x - 40, spacecraft.getPosition().y + 40));
+
 }
 
 void Player::draw(RenderWindow& window)
 {
 	window.draw(spacecraft);
+	window.draw(Hpbulb);
+}
+
+void Player::setHp(float Hp)
+{
+	this->Hp += Hp;
+	if (this->Hp > this->Maxhp)
+	{
+		this->Hp = Maxhp;
+	}
+	//ทำน้อยกว่าเลือดน้อยกว่า 0 ตรงนี้
+}
+
+float Player::getMaxhp()
+{
+	return Maxhp;
 }
 

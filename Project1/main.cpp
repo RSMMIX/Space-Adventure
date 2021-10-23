@@ -3,21 +3,18 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Background.h"
-#include "Animation.h"
 #include <vector>
 int main()
 {
 	srand(time_t(static_cast<unsigned>(0)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
-	//RectangleShape enemys(Vector2f(100.0f, 150.0f));
 	vector < Bullet > bullets;
 	vector < Enemy > enemies;
 	Background background;
-	//vector <Animation> animation;
 
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
-	Player rocket(spaceship);
+	Player rocket(spaceship, 100);
 	
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
@@ -27,19 +24,16 @@ int main()
 	enemy[1].loadFromFile("textures/Enemy/skeletaldragonpj.png");
 	enemy[2].loadFromFile("textures/Enemy/meteorite.png");
 
-	//Texture animations;
-	//animations.loadFromFile("textures/Fx/Fx1.png");
-	//enemys.setTexture(&animations);
-
-	//Animation animation(&animations,Vector2u(3,3), 0.3f);
-
-	
 	float speed = 150.f;
 	float showtime = 0.0f;
 	Clock clock;
 	float deltaTime = 0;
 	float sumtime = 0;
 	float bullettime = 0;
+	int level = 1;
+	int type;
+	int enemykill = 0;
+	
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
@@ -67,10 +61,24 @@ int main()
 		}
 		if (sumtime >= 2.0f)
 		{
-			enemies.push_back(Enemy(&enemy[rand() % 3], 10, 10));
+			switch (level)
+			{
+			case 1:
+				type = 1;
+				break;
+
+			case 2:
+				type = 2;
+				break;
+
+			case 3:
+				type = 3;
+				break;
+			}
+			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level));
 			sumtime = 0.f;
 		}
-
+		
 		// ↓ Update
 		background.update(deltaTime);
 
@@ -80,6 +88,14 @@ int main()
 			enemies[i].update(deltaTime, rocket.spacecraft.getPosition());
 			if (enemies[i].getHp() <= 0)
 			{
+				enemykill++;
+				if (enemykill >= 10)
+				{
+					enemykill = 0;
+					level++;
+					rocket.setHp(rocket.getMaxhp());
+					cout << level << endl;
+				}
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
@@ -87,29 +103,24 @@ int main()
 			{
 				if (enemies[i].getGlobalBounds().intersects(bullets[j].getGlobalBounds()))
 				{
-					enemies[i].setHp(1);
+					enemies[i].setHp(2);
 					bullets.erase(bullets.begin() + j);
 					break;
 				}
 			}
 			if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
+				rocket.setHp(-enemies[i].getdamage());
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
 		}
-
 		for (Bullet& Fbullet : bullets)
 		{
 			Fbullet.update(deltaTime);
 		}
-
-		//animation.update(0, deltaTime);
-		//enemys.setTextureRect(animation.uvRect);
-
 		window.clear();
 		
-
 		// ↓ Draw
 		background.draw(window);
 
