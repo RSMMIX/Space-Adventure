@@ -19,10 +19,24 @@ int main()
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
-	Texture enemy[3];
-	enemy[0].loadFromFile("textures/Enemy/e1.png");
-	enemy[1].loadFromFile("textures/Enemy/e2.png");
-	enemy[2].loadFromFile("textures/Enemy/e3.png");
+	Texture enemy[5];
+	enemy[0].loadFromFile("textures/Enemy/1.png");
+	enemy[1].loadFromFile("textures/Enemy/2.png");
+	enemy[2].loadFromFile("textures/Enemy/3.png");
+	enemy[3].loadFromFile("textures/Enemy/4.png");
+	enemy[4].loadFromFile("textures/Enemy/5.png");
+
+	Font font;
+	font.loadFromFile("fonts/Blern regular.ttf");
+	Text scoretext;
+	scoretext.setFont(font);
+	scoretext.setCharacterSize(40);
+	scoretext.setPosition(Vector2f(1560.0f , 20.0f));
+	scoretext.setFillColor(Color::White);
+	int score = 0;
+	
+
+
 
 	Clock clock;
 	int level = 1;
@@ -67,22 +81,53 @@ int main()
 				break;
 
 			case 2:
-				type = 2;
+				type = 1;
 				break;
 
 			case 3:
+				type = 2;
+				break;
+
+			case 4:
+				type = 2;
+				break;
+
+			case 5:
 				type = 3;
 				break;
-			default :
+
+			case 6:
 				type = 3;
+				break;
+
+			case 7:
+				type = 4;
+				break;
+
+			case 8:
+				type = 4;
+				break;
+
+			case 9:
+				type = 5;
+				break;
+
+			case 10:
+				type = 5;
+				break;
+
+			default :
+				type = 10;
 				break;
 			}
-			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level));
+			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level, rand() % 2 + 4));
 			sumtime = 0.f;
 		}
 		
 		// ↓ Update
+		cout << score << endl;
 		background.update(deltaTime);
+		scoretext.setString(" SCORE  " + to_string(score));
 
 		rocket.update(deltaTime);
 		for (size_t i = 0; i < enemies.size(); i++)
@@ -98,7 +143,53 @@ int main()
 					rocket.setHp(rocket.getMaxhp());
 					cout << level << endl;
 				}
+				// กำหนดคะแนนแต่ละเลเวล
+				switch (level)
+				{
+				case 1:
+					score += 2;
+					break;
+
+				case 2:
+					score += 2;
+					break;
+
+				case 3:
+					score += 4;
+					break;
+
+				case 4:
+					score += 4;
+					break;
+
+				case 5:
+					score += 6;
+					break;
+
+				case 6:
+					score += 6;
+					break;
+
+				case 7:
+					score += 8;
+					break;
+
+				case 8:
+					score += 8;
+					break;
+				case 9:
+					score += 10;
+					break;
+				case 10:
+					score += 10;
+					break;
+
+				default:
+					score: 10;
+					break;
+				}
 				enemies.erase(enemies.begin() + i);
+
 				break;
 			}
 			for (size_t j = 0; j < bullets.size(); j++)
@@ -137,8 +228,11 @@ int main()
 		}
 		
 		rocket.draw(window);
+		
+		window.draw(scoretext);
 
 		window.display();
+		
 	}
 	return 0;
 }

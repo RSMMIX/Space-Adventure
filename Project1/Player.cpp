@@ -25,32 +25,32 @@ void Player::update(float deltaTime)
 
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		//if (spacecraft.getPosition().y > 40)
-		//{
+		if (spacecraft.getPosition().y > 40)
+		{
 			direction = Vector2f(0, -1);
-		//}
+		}
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		//if (spacecraft.getPosition().x > 40)
-		//{
+		if (spacecraft.getPosition().x > 40)
+		{
 			direction = Vector2f(-1, 0);
-		//}
+		}
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		//if (spacecraft.getPosition().y < 1040)
-		//{
+		if (spacecraft.getPosition().y < 1040)
+		{
 			direction = Vector2f(0, 1);
-		//}
+		}
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		//if (spacecraft.getPosition().x < 1880)
-		//{
+		if (spacecraft.getPosition().x < 1880)
+		{
 			direction = Vector2f(1, 0);
-		//}
+		}
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
@@ -65,7 +65,8 @@ void Player::update(float deltaTime)
 
 	float Hpbar = this->Hp / this->Maxhp;
 	Hpbulb.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
-	Hpbulb.setPosition(Vector2f(spacecraft.getPosition().x - 40, spacecraft.getPosition().y + 40));
+	Hpbulb.setPosition(Vector2f(20.0f , 20.0f));
+	Hpbulb.setScale(Vector2f(5.0, 3.0));
 
 }
 

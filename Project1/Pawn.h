@@ -6,6 +6,7 @@
 #include<SFML/Window.hpp>
 #include<iostream>
 #include<time.h>
+#include<cmath>
 
 using namespace std;
 using namespace sf;
