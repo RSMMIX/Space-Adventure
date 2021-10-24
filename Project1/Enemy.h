@@ -37,8 +37,7 @@ private:
 	Sprite enemy;
 	float Hp;
 	float Maxhp;
-	int Level;
 	float speed;
 	float enemydamage;
-
+	int Level;
 };

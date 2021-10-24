@@ -6,7 +6,7 @@
 #include <vector>
 int main()
 {
-	srand(time_t(static_cast<unsigned>(0)));
+	srand(time_t(static_cast<unsigned>(NULL)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
 	vector < Bullet > bullets;
 	vector < Enemy > enemies;
@@ -24,15 +24,15 @@ int main()
 	enemy[1].loadFromFile("textures/Enemy/e2.png");
 	enemy[2].loadFromFile("textures/Enemy/e3.png");
 
-	float speed = 150.f;
-	float showtime = 0.0f;
 	Clock clock;
-	float deltaTime = 0;
-	float sumtime = 0;
-	float bullettime = 0;
 	int level = 1;
 	int type;
 	int enemykill = 0;
+	float speed = 150.f;
+	float showtime = 0.0f;
+	float deltaTime = 0;
+	float sumtime = 0;
+	float bullettime = 0;
 	
 	while (window.isOpen())
 	{
@@ -53,7 +53,6 @@ int main()
 				}
 			}
 		}
-
 		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
 		{
 			bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));

@@ -6,7 +6,6 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level)
 	this->Hp = Hp;
 	Level = Level;
 	
-
 	spacecraft.setTexture(spaceship);
 	spacecraft.setSize(Vector2f(80.0f, 80.0f));
 	spacecraft.setOrigin(40.0f, 40.0f);
@@ -60,7 +59,6 @@ void Enemy::update(float deltaTime, Vector2f position)
 	float Hpbar = this->Hp / this->Maxhp;
 	denemy.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
 	denemy.setPosition(Vector2f(spacecraft.getPosition().x - 40 , spacecraft.getPosition().y + 40));
-	
 }
 
 void Enemy::draw(RenderWindow& window)
