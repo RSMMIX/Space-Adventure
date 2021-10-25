@@ -31,7 +31,7 @@ int main()
 	Text scoretext;
 	scoretext.setFont(font);
 	scoretext.setCharacterSize(40);
-	scoretext.setPosition(Vector2f(1560.0f , 20.0f));
+	scoretext.setPosition(Vector2f(1700.0f , 20.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
 	
@@ -74,6 +74,7 @@ int main()
 		}
 		if (sumtime >= 2.0f)
 		{
+			//เลเวล
 			switch (level)
 			{
 			case 1:
@@ -120,11 +121,14 @@ int main()
 				type = 10;
 				break;
 			}
-			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level, rand() % 2 + 4));
+			                                                            //สุ่มให้เกิดทิศทางไหน
+			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level, rand() % 3 + 1));
 			sumtime = 0.f;
 		}
 		
 		// ↓ Update
+
+		//ทำคะแนน
 		cout << score << endl;
 		background.update(deltaTime);
 		scoretext.setString(" SCORE  " + to_string(score));
@@ -135,6 +139,7 @@ int main()
 			enemies[i].update(deltaTime, rocket.spacecraft.getPosition());
 			if (enemies[i].getHp() <= 0)
 			{
+				//เลเวลเมื่อคิวได้
 				enemykill++;
 				if (enemykill >= 10)
 				{
@@ -196,7 +201,7 @@ int main()
 			{
 				if (enemies[i].getGlobalBounds().intersects(bullets[j].getGlobalBounds()))
 				{
-					enemies[i].setHp(2);
+					enemies[i].setHp(2); //ความเเรงกระสุน
 					bullets.erase(bullets.begin() + j);
 					break;
 				}

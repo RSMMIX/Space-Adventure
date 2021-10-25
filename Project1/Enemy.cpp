@@ -31,20 +31,20 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 		position.y = rand() % 1080;
 	}
 
-	if (randomtype == 2)
+	/*if (randomtype == 2)
 	{
 		//ล่าง
 		position.x = rand() % 1920;
 		position.y = 1180;
-	}
+	}*/
 
-	if (randomtype == 3)
+	if (randomtype == 2)
 	{
 		//ขวา
 		position.x = 2020;
 		position.y = rand() % 1080;
 	}
-	if (randomtype == 4)
+	if (randomtype == 3)
 	{
 		position.x = rand() % 1800 + 100;
 		type_4_y = 0.0f;
@@ -62,7 +62,7 @@ Enemy::~Enemy()
 
 void Enemy::update(float deltaTime, Vector2f position)
 {
-	if (randomtype == 4)
+	if (randomtype == 3)
 	{
 		type_4_x = sinf(type_4_time += deltaTime) * 300.0f;
 		spacecraft.setPosition((type_4_x) + (500.0f + (4.5 - randomtype) * 500.f), type_4_y -= deltaTime * speed * -100.0f);
@@ -71,6 +71,7 @@ void Enemy::update(float deltaTime, Vector2f position)
 	{
 		spacecraft.move(Vector2f(position.x - spacecraft.getPosition().x, position.y - spacecraft.getPosition().y)* deltaTime * speed);
 	}
+	//หลอดเลือดศัตรู
 	float Hpbar = this->Hp / this->Maxhp;
 	denemy.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
 	denemy.setPosition(Vector2f(spacecraft.getPosition().x - 40 , spacecraft.getPosition().y + 40));
