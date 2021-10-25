@@ -71,6 +71,7 @@ void Enemy::update(float deltaTime, Vector2f position)
 	{
 		spacecraft.move(Vector2f(position.x - spacecraft.getPosition().x, position.y - spacecraft.getPosition().y)* deltaTime * speed);
 	}
+
 	//หลอดเลือดศัตรู
 	float Hpbar = this->Hp / this->Maxhp;
 	denemy.setSize(Vector2f(Hpbar * 80.0f, 10.0f));

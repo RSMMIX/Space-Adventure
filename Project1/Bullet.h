@@ -11,7 +11,10 @@ public:
 	void update(float deltaTime);
 	void draw(RenderWindow& window);
 
-	FloatRect getGlobalBounds() { return spacecraft.getGlobalBounds(); }
+	FloatRect getGlobalBounds() 
+	{ 
+		return spacecraft.getGlobalBounds(); 
+	}
 
 private:
 	Vector2f direction;

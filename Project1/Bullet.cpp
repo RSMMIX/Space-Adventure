@@ -23,6 +23,7 @@ void Bullet::update(float deltaTime)
 {
 	direction = rotateVector(Vector2f(0,-1), spacecraft.getRotation());
 	spacecraft.move(direction * deltaTime * speed);
+	spacecraft.getPosition();
 }
 
 void Bullet::draw(RenderWindow& window)

@@ -19,6 +19,7 @@ Player::~Player()
 
 }
 
+//เช็คห้ามเลยครอบหน้าจอ
 void Player::update(float deltaTime)
 {
 	direction = Vector2f(0.0f , 0.0f);
@@ -38,6 +39,7 @@ void Player::update(float deltaTime)
 			direction = Vector2f(-1, 0);
 		}
 	}
+
 	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
 		if (spacecraft.getPosition().y < 1040)
@@ -45,6 +47,7 @@ void Player::update(float deltaTime)
 			direction = Vector2f(0, 1);
 		}
 	}
+
 	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
 		if (spacecraft.getPosition().x < 1880)
@@ -52,21 +55,24 @@ void Player::update(float deltaTime)
 			direction = Vector2f(1, 0);
 		}
 	}
+
 	if (Keyboard::isKeyPressed(Keyboard::Q))
 	{
 		spacecraft.rotate(deltaTime * -momentum);
 	}
+
 	if (Keyboard::isKeyPressed(Keyboard::E))
 	{
 		spacecraft.rotate(deltaTime * momentum);
 	}
+
 	spacecraft.move(direction * speed * deltaTime);
 
-
+	//หลอดเลือดผู้เล่น
 	float Hpbar = this->Hp / this->Maxhp;
-	Hpbulb.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
-	Hpbulb.setPosition(Vector2f(20.0f , 20.0f));
-	Hpbulb.setScale(Vector2f(5.0, 3.0));
+	Hpbulb.setSize(Vector2f(Hpbar * 200.0f, 10.0f));
+	Hpbulb.setPosition(Vector2f(30.0f , 20.0f));
+	Hpbulb.setScale(Vector2f(2.0, 1.0));
 
 }
 

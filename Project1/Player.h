@@ -21,4 +21,5 @@ private:
 	float speed, momentum;
 	float Hp;
 	float Maxhp;
+	int Level;
 };

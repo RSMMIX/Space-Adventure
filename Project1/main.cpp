@@ -19,12 +19,20 @@ int main()
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
-	Texture enemy[5];
+	Texture enemy[6];
 	enemy[0].loadFromFile("textures/Enemy/1.png");
 	enemy[1].loadFromFile("textures/Enemy/2.png");
 	enemy[2].loadFromFile("textures/Enemy/3.png");
 	enemy[3].loadFromFile("textures/Enemy/4.png");
 	enemy[4].loadFromFile("textures/Enemy/5.png");
+
+
+	Texture meteorite;
+	meteorite.loadFromFile("textures/Enemy/6.png");
+	RectangleShape meteorites(Vector2f(120.0f , 120.0f));
+	meteorites.setTexture(&meteorite);
+	meteorites.setPosition(rand() % 1920, 0);
+
 
 	Font font;
 	font.loadFromFile("fonts/Blern regular.ttf");
@@ -35,9 +43,6 @@ int main()
 	scoretext.setFillColor(Color::White);
 	int score = 0;
 	
-
-
-
 	Clock clock;
 	int level = 1;
 	int type;
@@ -125,6 +130,15 @@ int main()
 			enemies.push_back(Enemy(&enemy[rand() % type], 10 , level, rand() % 3 + 1));
 			sumtime = 0.f;
 		}
+
+		if (meteorites.getPosition().y < 1080)
+		{
+			meteorites.setPosition(meteorites.getPosition().x , meteorites.getPosition().y + 3);
+		}
+		else
+		{
+			meteorites.setPosition(rand() % 1920, 0);
+		}
 		
 		// ↓ Update
 
@@ -160,33 +174,33 @@ int main()
 					break;
 
 				case 3:
-					score += 4;
+					score += 5;
 					break;
 
 				case 4:
-					score += 4;
+					score += 5;
 					break;
 
 				case 5:
-					score += 6;
+					score += 8;
 					break;
 
 				case 6:
-					score += 6;
+					score += 8;
 					break;
 
 				case 7:
-					score += 8;
+					score += 12;
 					break;
 
 				case 8:
-					score += 8;
+					score += 12;
 					break;
 				case 9:
-					score += 10;
+					score += 25;
 					break;
 				case 10:
-					score += 10;
+					score += 25;
 					break;
 
 				default:
@@ -194,18 +208,29 @@ int main()
 					break;
 				}
 				enemies.erase(enemies.begin() + i);
-
 				break;
 			}
+
 			for (size_t j = 0; j < bullets.size(); j++)
 			{
 				if (enemies[i].getGlobalBounds().intersects(bullets[j].getGlobalBounds()))
 				{
-					enemies[i].setHp(2); //ความเเรงกระสุน
+					enemies[i].setHp(2); //ความเเรงกระสุนลดเลือดศัตรู
 					bullets.erase(bullets.begin() + j);
 					break;
 				}
+				if (bullets[j].spacecraft.getPosition().x < 0 || bullets[j].spacecraft.getPosition().x > 1920 || bullets[j].spacecraft.getPosition().y < 0 || bullets[j].spacecraft.getPosition().y > 1080)
+				{
+					bullets.erase(bullets.begin() + j);
+				}
 			}
+				//สุ่มอุกกาบาต
+			if (rocket.spacecraft.getGlobalBounds().intersects(meteorites.getGlobalBounds()))
+			{
+				rocket.setHp(-10);//อุกกาบาตลดเลือดผู้เล่น
+				meteorites.setPosition(rand() % 10, 0);
+			}
+				//ลดเลือดเราเวลาอุกกาบาตชน	
 			if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
 				rocket.setHp(-enemies[i].getdamage());
@@ -231,7 +256,8 @@ int main()
 		{
 			Fenemy.draw(window);
 		}
-		
+		window.draw(meteorites);
+
 		rocket.draw(window);
 		
 		window.draw(scoretext);

@@ -25,7 +25,7 @@ Background::~Background()
 
 void Background::update(float deltaTime)
 {
-
+	//background scrolling
 	for (size_t i = 0; i < backgrounds.size(); i++)
 	{
 		if (i > 0) backgrounds[i].setPosition(0.f, backgrounds[i - 1].getPosition().y - backgrounds[i].getGlobalBounds().height);
