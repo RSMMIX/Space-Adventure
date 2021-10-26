@@ -42,9 +42,15 @@ int main()
 	scoretext.setPosition(Vector2f(1700.0f , 20.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
+
+	RectangleShape Lvbulb;
+	RectangleShape LvbulbMax;
+	Lvbulb.setFillColor(Color(0, 255, 101));
+	LvbulbMax.setFillColor(Color(0, 101, 11));
 	
 	Clock clock;
 	int level = 1;
+	int requireToKill = 5;
 	int type;
 	int enemykill = 0;
 	float speed = 150.f;
@@ -84,14 +90,17 @@ int main()
 			{
 			case 1:
 				type = 1;
+				requireToKill = 5;
 				break;
 
 			case 2:
 				type = 1;
+				requireToKill = 10;
 				break;
 
 			case 3:
 				type = 2;
+				requireToKill = 15;
 				break;
 
 			case 4:
@@ -141,7 +150,14 @@ int main()
 		}
 		
 		// ↓ Update
-
+		//หลอด lv ผู้เล่น
+		float LvBar = (float)enemykill / requireToKill;
+		Lvbulb.setSize(Vector2f(LvBar * 200.0f, 10.0f));
+		Lvbulb.setPosition(Vector2f(30.0f , 30.0f));
+		Lvbulb.setScale(Vector2f(2.0, 1.0));
+		LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
+		LvbulbMax.setPosition(Vector2f(30.0f , 30.0f));
+		LvbulbMax.setScale(Vector2f(2.0, 1.0));
 		//ทำคะแนน
 		cout << score << endl;
 		background.update(deltaTime);
@@ -155,7 +171,7 @@ int main()
 			{
 				//เลเวลเมื่อคิวได้
 				enemykill++;
-				if (enemykill >= 10)
+				if (enemykill >= requireToKill)
 				{
 					enemykill = 0;
 					level++;
@@ -261,6 +277,9 @@ int main()
 		rocket.draw(window);
 		
 		window.draw(scoretext);
+
+		window.draw(LvbulbMax);
+		window.draw(Lvbulb);
 
 		window.display();
 		

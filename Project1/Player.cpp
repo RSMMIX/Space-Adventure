@@ -12,8 +12,8 @@ Player::Player(Texture &spaceship , float Hp)
 	this->Maxhp = Hp;
 	this->Hp = Hp;
 	Hpbulb.setFillColor(Color(255, 0, 0));
+	HpbulbMax.setFillColor(Color(101, 0, 0));
 }
-
 Player::~Player()
 {
 
@@ -73,12 +73,15 @@ void Player::update(float deltaTime)
 	Hpbulb.setSize(Vector2f(Hpbar * 200.0f, 10.0f));
 	Hpbulb.setPosition(Vector2f(30.0f , 20.0f));
 	Hpbulb.setScale(Vector2f(2.0, 1.0));
-
+	HpbulbMax.setSize(Vector2f(200.0f, 10.0f));
+	HpbulbMax.setPosition(Vector2f(30.0f , 20.0f));
+	HpbulbMax.setScale(Vector2f(2.0, 1.0));
 }
 
 void Player::draw(RenderWindow& window)
 {
 	window.draw(spacecraft);
+	window.draw(HpbulbMax);
 	window.draw(Hpbulb);
 }
 
@@ -90,6 +93,10 @@ void Player::setHp(float Hp)
 		this->Hp = Maxhp;
 	}
 	//ทำน้อยกว่าเลือดน้อยกว่า 0 ตรงนี้
+	if (this->Hp < 0)
+	{
+		this->Hp = 0;
+	}
 }
 
 float Player::getMaxhp()

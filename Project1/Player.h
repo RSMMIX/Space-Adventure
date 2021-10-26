@@ -9,6 +9,7 @@ public:
 
 	Sprite spacecraft;
 	RectangleShape Hpbulb;
+	RectangleShape HpbulbMax;
 
 	void update(float deltaTime);
 	void draw(RenderWindow &window);
