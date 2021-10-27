@@ -90,45 +90,52 @@ int main()
 			{
 			case 1:
 				type = 1;
-				requireToKill = 5;
+				requireToKill = 3;
 				break;
 
 			case 2:
 				type = 1;
-				requireToKill = 10;
+				requireToKill = 5;
 				break;
 
 			case 3:
 				type = 2;
-				requireToKill = 15;
+				requireToKill = 7;
 				break;
 
 			case 4:
 				type = 2;
+				requireToKill = 9;
 				break;
 
 			case 5:
 				type = 3;
+				requireToKill = 11;
 				break;
 
 			case 6:
 				type = 3;
+				requireToKill = 13;
 				break;
 
 			case 7:
 				type = 4;
+				requireToKill = 15;
 				break;
 
 			case 8:
 				type = 4;
+				requireToKill = 17;
 				break;
 
 			case 9:
 				type = 5;
+				requireToKill = 19;
 				break;
 
 			case 10:
 				type = 5;
+				requireToKill = 25;
 				break;
 
 			default :
