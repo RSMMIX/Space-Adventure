@@ -1,5 +1,5 @@
 #pragma once
-#include "Pawn.h"
+#include "Library.h"
 
 class Enemy
 {
@@ -9,6 +9,7 @@ public:
 	
 	RectangleShape spacecraft;
 	RectangleShape denemy;
+	RectangleShape denemyMax;
 
 	void update(float deltaTime, Vector2f position);
 	void draw(RenderWindow& window);

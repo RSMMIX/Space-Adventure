@@ -2,7 +2,7 @@
 
 Background::Background()
 {
-	background_1.loadFromFile("textures/Bg/bg1.jpg");
+	background_1.loadFromFile("textures/Bg/bg.jpg");
 
 	background_2.loadFromFile("textures/Bg/bg2.jpg");
 
