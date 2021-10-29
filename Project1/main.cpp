@@ -288,10 +288,10 @@ int main()
 		//It's supposed to be OK!
 		for(size_t i = 0 ;i < meteorites.size(); i++)
 		{
-			if (meteorite[i].metorite_sprite.getGlobalBounds())
+			if (meteorites[i].metorite_sprite.getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
 				rocket.setHp(-meteorites[i].getdamage());
-				meteorite.erase(meteorites.begin() + i);
+				meteorites.erase(meteorites.begin() + i);
 				break;
 			}
 		}
@@ -321,7 +321,12 @@ int main()
 		{
 			Fenemy.draw(window);
 		}
-		window.draw(meteorites);
+
+
+		for (Meteorite& Fmeteorites : meteorites)
+		{
+			Fmeteorites.draw(window);
+		}
 
 		rocket.draw(window);
 		
