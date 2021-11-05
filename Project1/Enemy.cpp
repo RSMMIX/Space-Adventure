@@ -76,11 +76,11 @@ void Enemy::update(float deltaTime, Vector2f position)
 	//หลอดเลือดศัตรู
 	float Hpbar = this->Hp / this->Maxhp;
 	denemy.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
-	denemy.setPosition(Vector2f(spacecraft.getPosition().x - 40 , spacecraft.getPosition().y + 40));
-	denemy.setScale(Vector2f(0.8, 0.5));
+	denemy.setPosition(Vector2f(spacecraft.getPosition().x - 20 , spacecraft.getPosition().y + 40));
+	denemy.setScale(Vector2f(0.6, 0.5));
 	denemyMax.setSize(Vector2f(80.0f, 10.0f));
-	denemyMax.setPosition(Vector2f(spacecraft.getPosition().x - 40, spacecraft.getPosition().y + 40));
-	denemyMax.setScale(Vector2f(0.8, 0.5));
+	denemyMax.setPosition(Vector2f(spacecraft.getPosition().x - 20, spacecraft.getPosition().y + 40));
+	denemyMax.setScale(Vector2f(0.6, 0.5));
 
 }
 

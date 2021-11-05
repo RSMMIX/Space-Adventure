@@ -33,13 +33,12 @@ int main()
 	Texture meteorite;
 	meteorite.loadFromFile("textures/Enemy/6.png");
 
-	Texture itemstexture[7];
+	Texture itemstexture[5];
 	itemstexture[0].loadFromFile("textures/Item/t1.png"); //ซ้อมยาน
 	itemstexture[1].loadFromFile("textures/Item/t2.png"); //โล่
 	itemstexture[2].loadFromFile("textures/Item/t3.png"); //ชีวิตอมตะ
-	itemstexture[3].loadFromFile("textures/Item/t4.png"); //misile
-	itemstexture[4].loadFromFile("textures/Item/t5.png"); //ยิงกระสุนแบบอมตะ
-	itemstexture[5].loadFromFile("textures/Item/t6.png"); //เพิ่มความเร็วยาน
+	itemstexture[3].loadFromFile("textures/Item/t5.png"); //ยิงกระสุนแบบอมตะ
+	itemstexture[4].loadFromFile("textures/Item/t6.png"); //เพิ่มความเร็วยาน
 
 	//ฟอนต์
 	Font font;
