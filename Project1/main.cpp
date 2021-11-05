@@ -40,15 +40,26 @@ int main()
 	itemstexture[3].loadFromFile("textures/Item/t5.png"); //ยิงกระสุนแบบอมตะ
 	itemstexture[4].loadFromFile("textures/Item/t6.png"); //เพิ่มความเร็วยาน
 
-	//ฟอนต์
+	Texture shieldFx;
+	shieldFx.loadFromFile("textures/Fx/Fx2.png");
+
+	//ฟอนต์score
 	Font font;
 	font.loadFromFile("fonts/Blern regular.ttf");
 	Text scoretext;
+	//score
 	scoretext.setFont(font);
 	scoretext.setCharacterSize(40);
 	scoretext.setPosition(Vector2f(1700.0f , 20.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
+
+	Text scorebullet;
+	//scorebullet
+	scorebullet.setFont(font);
+	scorebullet.setCharacterSize(40);
+	scorebullet.setPosition(Vector2f(1700.0f, 40.0f));
+	scorebullet.setFillColor(Color::White);
 
 	//หลอดเลเวล
 	RectangleShape Lvbulb;
@@ -62,6 +73,10 @@ int main()
 	int type;
 	int enemykill = 0;
 	int maxMeteorite = 0;
+	int Maxbulletammo =  50; //จำนวนกรสุน
+	int bulletammo = Maxbulletammo;
+
+
 	float speed = 150.f;
 	float showtime = 0.0f;
 	float deltaTime = 0;
@@ -77,6 +92,11 @@ int main()
 	float shieldDurationMax = 5.f;
 
 	int extraLife = 0;
+
+	//Speed Up
+	bool isSpeed = 0; 
+	float speedupDuration = 0.f;
+	float speedupDurationMax = 10.f;
 
 	while (window.isOpen())
 	{
@@ -97,9 +117,10 @@ int main()
 				}
 			}
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f)
+		if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f &&  bulletammo > 0)
 		{
 			bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
+			bulletammo--;
 			bullettime = 0.f;
 		}
 		if (sumtime >= 2.0f && !stopSpawn)
@@ -196,6 +217,8 @@ int main()
 		cout << score << endl;
 		background.update(deltaTime);
 		scoretext.setString(" SCORE  " + to_string(score));
+		//ทำตัวเลขกระสุน
+		scorebullet.setString(" AMMO  " + to_string(bulletammo));
 
 		rocket.update(deltaTime);
 		for (size_t i = 0; i < enemies.size(); i++)
@@ -210,6 +233,8 @@ int main()
 					enemykill = 0;
 					level++;
 					rocket.setHp(rocket.getMaxhp());
+					Maxbulletammo += 10; //เพิ่มกระสุนแต่ละเวล
+					bulletammo = Maxbulletammo;
 					cout << level << endl;
 				}
 				// กำหนดคะแนนแต่ละเลเวล
@@ -260,7 +285,7 @@ int main()
 				//Spawn Item     
 				int rand_item = rand()% 100;
 				if(rand_item >= 0 && rand_item <= 10)                //สุ่ม 4แบบ
-					items.push_back(Item(&itemstexture[rand() % 4], enemies[i].getPosition(), rand() % 4));
+					items.push_back(Item(&itemstexture[rand() % 5], enemies[i].getPosition(), rand() % 4));
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
@@ -314,7 +339,7 @@ int main()
 				switch(items[i].getItem())
 				{
 				case 0:
-					rocket.setHp(15);
+					rocket.setHp(100);//set เลือด
 					break;
 				case 1:
 					isShield = 1;
@@ -324,6 +349,9 @@ int main()
 					break;
 				case 3:
 					score += 100;
+					break;
+				case 4:
+					isSpeed = 1;
 					break;
 				default:
 					break;
@@ -347,16 +375,32 @@ int main()
 		//ทำโล่
 		if(isShield)
 		{
+			rocket.setTexture(shieldFx);
 			if(shieldDuration < shieldDurationMax)
 				shieldDuration += deltaTime;
-
 			else
 			{
 				isShield = 0;
+				rocket.setTexture(spaceship);
 				shieldDuration = 0.f;
 			}
 		}
-
+		
+		//Speed Up
+		if(isSpeed)
+		{
+			rocket.setSpeed(400.f);
+			if(speedupDuration < speedupDurationMax)
+				speedupDuration += deltaTime;
+			else
+			{
+				isSpeed = 0;
+				speedupDuration = 0.f;
+			}
+		}
+		else
+			rocket.setSpeed(200.f);
+	
 
 		window.clear();
 		
@@ -373,7 +417,6 @@ int main()
 			Fenemy.draw(window);
 		}
 
-
 		for (Meteorite& Fmeteorites : meteorites)
 		{
 			Fmeteorites.draw(window);
@@ -387,6 +430,7 @@ int main()
 		rocket.draw(window);
 		
 		window.draw(scoretext);
+		window.draw(scorebullet);
 
 		window.draw(LvbulbMax);
 		window.draw(Lvbulb);
