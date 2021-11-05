@@ -30,16 +30,16 @@ int main()
 	enemy[3].loadFromFile("textures/Enemy/4.png");
 	enemy[4].loadFromFile("textures/Enemy/5.png");
 
-
 	Texture meteorite;
 	meteorite.loadFromFile("textures/Enemy/6.png");
-	vector<RectangleShape> meteorites;
 
-	Texture itemstexture[4];
+	Texture itemstexture[7];
 	itemstexture[0].loadFromFile("textures/Item/t1.png"); //ซ้อมยาน
 	itemstexture[1].loadFromFile("textures/Item/t2.png"); //โล่
-	itemstexture[2].loadFromFile("textures/Item/t3.png"); //เพิ่มชีวิตยาน(อะไรยาน?)
-	itemstexture[3].loadFromFile("textures/Item/gold-coin.png"); //เหรียญ
+	itemstexture[2].loadFromFile("textures/Item/t3.png"); //ชีวิตอมตะ
+	itemstexture[3].loadFromFile("textures/Item/t4.png"); //misile
+	itemstexture[4].loadFromFile("textures/Item/t5.png"); //ยิงกระสุนแบบอมตะ
+	itemstexture[5].loadFromFile("textures/Item/t6.png"); //เพิ่มความเร็วยาน
 
 	//ฟอนต์
 	Font font;
@@ -54,10 +54,8 @@ int main()
 	//หลอดเลเวล
 	RectangleShape Lvbulb;
 	RectangleShape LvbulbMax;
-	Lvbulb.setFillColor(Color(0, 255, 101));
-	LvbulbMax.setFillColor(Color(0, 101, 11));
-
-	
+	Lvbulb.setFillColor(Color(0, 204, 204));
+	LvbulbMax.setFillColor(Color(0, 102, 204));
 	
 	Clock clock;
 	int level = 1;
@@ -74,6 +72,13 @@ int main()
 	bool stopSpawn = 1;
 	float stopSpawnDelay = 0.0f;
 	
+	//Invincible
+	bool isShield = 0;
+	float shieldDuration = 0.0f;
+	float shieldDurationMax = 5.f;
+
+	int extraLife = 0;
+
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
@@ -183,11 +188,11 @@ int main()
 		//หลอด lv ผู้เล่น
 		float LvBar = (float)enemykill / requireToKill;
 		Lvbulb.setSize(Vector2f(LvBar * 200.0f, 10.0f));
-		Lvbulb.setPosition(Vector2f(70.0f , 30.0f));
-		Lvbulb.setScale(Vector2f(2.0, 1.0));
+		Lvbulb.setPosition(Vector2f(50.0f , 35.0f));
+		Lvbulb.setScale(Vector2f(2.0, 0.50));
 		LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
-		LvbulbMax.setPosition(Vector2f(70.0f , 30.0f));
-		LvbulbMax.setScale(Vector2f(2.0, 1.0));
+		LvbulbMax.setPosition(Vector2f(50.0f , 35.0f));
+		LvbulbMax.setScale(Vector2f(2.0, 0.50));
 		//ทำคะแนน
 		cout << score << endl;
 		background.update(deltaTime);
@@ -253,6 +258,10 @@ int main()
 					score: 10;
 					break;
 				}
+				//Spawn Item     
+				int rand_item = rand()% 100;
+				if(rand_item >= 0 && rand_item <= 10)                //สุ่ม 4แบบ
+					items.push_back(Item(&itemstexture[rand() % 4], enemies[i].getPosition(), rand() % 4));
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
@@ -274,7 +283,8 @@ int main()
 			//ลดเลือดเราเวลาศัตรูชน	
 			if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
-				rocket.setHp(-enemies[i].getdamage());
+				if(!isShield)
+					rocket.setHp(-enemies[i].getdamage());
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
@@ -285,13 +295,41 @@ int main()
 			Fbullet.update(deltaTime);
 		}
 		//Update Meteorite
-		//It's supposed to be OK!
-		for(size_t i = 0 ;i < meteorites.size(); i++)
+		for(size_t i = 0; i < meteorites.size(); i++)
 		{
-			if (meteorites[i].metorite_sprite.getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+			meteorites[i].update(deltaTime);
+			if (meteorites[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
-				rocket.setHp(-meteorites[i].getdamage());
+				if(!isShield)
+					rocket.setHp(-meteorites[i].getdamage());
 				meteorites.erase(meteorites.begin() + i);
+				break;
+			}
+		}
+
+		//Update Item
+		for(size_t i = 0; i < items.size(); i++)
+		{
+			if (items[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+			{
+				switch(items[i].getItem())
+				{
+				case 0:
+					rocket.setHp(15);
+					break;
+				case 1:
+					isShield = 1;
+					break;
+				case 2:
+					extraLife++;
+					break;
+				case 3:
+					score += 100;
+					break;
+				default:
+					break;
+				}
+				items.erase(items.begin() + i);
 				break;
 			}
 		}
@@ -307,6 +345,20 @@ int main()
 				stopSpawnDelay = 0.f;
 			}
 		}
+		//ทำโล่
+		if(isShield)
+		{
+			if(shieldDuration < shieldDurationMax)
+				shieldDuration += deltaTime;
+
+			else
+			{
+				isShield = 0;
+				shieldDuration = 0.f;
+			}
+		}
+
+
 		window.clear();
 		
 		// ↓ Draw
@@ -326,6 +378,11 @@ int main()
 		for (Meteorite& Fmeteorites : meteorites)
 		{
 			Fmeteorites.draw(window);
+		}
+
+		for (Item& Fitems: items)
+		{
+			Fitems.renderItem(window);
 		}
 
 		rocket.draw(window);

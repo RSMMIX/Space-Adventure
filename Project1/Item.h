@@ -8,10 +8,13 @@ private:
 	sf::Sprite item_sprite;
 
 	int item_type;
-	// 0 ซ้อมยาน
-	// 1 โล่
-	// 2 เพิ่มชีวิตยาน(อะไรยาน?)
-	// 3 เหรียญ
+	//ซ้อมยาน
+	//โล่
+	//ชีวิตอมตะ
+	//misile
+	//ยิงกระสุนแบบอมตะ
+	//เพิ่มความเร็วยาน
+
 public:
 	Item(sf::Texture* texture,sf::Vector2f init_position,int type);
 

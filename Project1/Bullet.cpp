@@ -3,8 +3,8 @@
 Bullet::Bullet(Texture* spaceship, Vector2f position, float degree)
 {
 	spacecraft.setTexture(spaceship);
-	spacecraft.setSize(Vector2f(10.0f, 10.0f));
-	spacecraft.setOrigin(5.0f, 5.0f);
+	spacecraft.setSize(Vector2f(15.0f, 15.0f));
+	spacecraft.setOrigin(7.5f, 7.5f);
 	spacecraft.setPosition(position);
 	spacecraft.setRotation(degree);
 	direction = rotateVector(Vector2f(0, -1), spacecraft.getRotation());

@@ -8,10 +8,13 @@ public:
     void update(float deltaTime);
 	void draw(RenderWindow& window);
 	float getdamage();
-    
-    Sprite metorite_sprite;
+    FloatRect getGlobalBounds() 
+	{ 
+		return metorite_sprite.getGlobalBounds(); 
+	}
 
 private:
+	Sprite metorite_sprite;
 	float speed;
 	float metoriteDamage;
 };

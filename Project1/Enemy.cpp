@@ -9,12 +9,12 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 	Level = Level;
 	
 	spacecraft.setTexture(spaceship);
-	spacecraft.setSize(Vector2f(40.0f, 40.0f));
+	spacecraft.setSize(Vector2f(80.0f, 80.0f));
 	spacecraft.setOrigin(40.0f, 40.0f);
 	random = rand() % 4;
 	
 	denemy.setFillColor(Color(255, 0, 0));
-	denemyMax.setFillColor(Color(101, 0, 0));
+	denemyMax.setFillColor(Color(198, 0, 0));
 
 	enemydamage = 10 + (level * 3);
 	
@@ -77,16 +77,18 @@ void Enemy::update(float deltaTime, Vector2f position)
 	float Hpbar = this->Hp / this->Maxhp;
 	denemy.setSize(Vector2f(Hpbar * 80.0f, 10.0f));
 	denemy.setPosition(Vector2f(spacecraft.getPosition().x - 40 , spacecraft.getPosition().y + 40));
+	denemy.setScale(Vector2f(0.8, 0.5));
 	denemyMax.setSize(Vector2f(80.0f, 10.0f));
 	denemyMax.setPosition(Vector2f(spacecraft.getPosition().x - 40, spacecraft.getPosition().y + 40));
+	denemyMax.setScale(Vector2f(0.8, 0.5));
 
 }
 
 void Enemy::draw(RenderWindow& window)
 {
 	window.draw(spacecraft);
-	window.draw(denemy);
 	window.draw(denemyMax);
+	window.draw(denemy);
 }
 
 float Enemy::getdamage()
