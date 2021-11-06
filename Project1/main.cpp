@@ -23,12 +23,14 @@ int main()
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
-	Texture enemy[6];
+	Texture enemy[7];
 	enemy[0].loadFromFile("textures/Enemy/1.png");
 	enemy[1].loadFromFile("textures/Enemy/2.png");
 	enemy[2].loadFromFile("textures/Enemy/3.png");
 	enemy[3].loadFromFile("textures/Enemy/4.png");
 	enemy[4].loadFromFile("textures/Enemy/5.png");
+	enemy[5].loadFromFile("textures/Enemy/7.png");
+	enemy[6].loadFromFile("textures/Enemy/8.png");
 
 	Texture meteorite;
 	meteorite.loadFromFile("textures/Enemy/6.png");
@@ -57,8 +59,8 @@ int main()
 	Text scorebullet;
 	//scorebullet
 	scorebullet.setFont(font);
-	scorebullet.setCharacterSize(40);
-	scorebullet.setPosition(Vector2f(1700.0f, 40.0f));
+	scorebullet.setCharacterSize(20);
+	scorebullet.setPosition(Vector2f(40.0f, 40.0f));
 	scorebullet.setFillColor(Color::White);
 
 	//หลอดเลเวล
@@ -73,7 +75,7 @@ int main()
 	int type;
 	int enemykill = 0;
 	int maxMeteorite = 0;
-	int Maxbulletammo =  50; //จำนวนกรสุน
+	int Maxbulletammo =  60; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
 
 
@@ -121,7 +123,7 @@ int main()
 		{
 			bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
 			bulletammo--;
-			bullettime = 0.f;
+			bullettime = 0.0f;
 		}
 		if (sumtime >= 2.0f && !stopSpawn)
 		{
@@ -130,67 +132,66 @@ int main()
 			{
 			case 1:
 				type = 1;
-				requireToKill = 3;
+				requireToKill = 5;
 				maxMeteorite = 0;
 				break;
 
 			case 2:
-				type = 1;
-				
-				requireToKill = 5;
-				maxMeteorite = 1;
+				type = 2;
+				requireToKill = 7;
+				maxMeteorite = 2;
 				break;
 
 			case 3:
 				type = 2;
-				requireToKill = 7;
-				maxMeteorite = 1;
+				requireToKill = 9;
+				maxMeteorite = 4;
 				break;
 
 			case 4:
-				type = 2;
-				requireToKill = 9;
-				maxMeteorite = 2;
+				type = 3;
+				requireToKill = 11;
+				maxMeteorite = 5;
 				break;
 
 			case 5:
 				type = 3;
-				requireToKill = 11;
-				maxMeteorite = 2;
+				requireToKill = 15;
+				maxMeteorite = 6;
 				break;
 
 			case 6:
-				type = 3;
-				requireToKill = 13;
-				maxMeteorite = 3;
+				type = 4;
+				requireToKill = 19;
+				maxMeteorite = 7;
 				break;
 
 			case 7:
-				type = 4;
-				requireToKill = 15;
-				maxMeteorite = 4;
+				type = 5;
+				requireToKill = 21;
+				maxMeteorite = 8;
 				break;
 
 			case 8:
-				type = 4;
-				requireToKill = 17;
-				maxMeteorite = 4;
+				type = 6;
+				requireToKill = 25;
+				maxMeteorite = 9;
 				break;
 
 			case 9:
-				type = 5;
-				requireToKill = 19;
-				maxMeteorite = 5;
+				type = 7;
+				requireToKill = 31;
+				maxMeteorite = 10;
 				break;
 
 			case 10:
-				type = 5;
-				requireToKill = 25;
-				maxMeteorite = 5;
+				type = 7;
+				requireToKill = 41;
+				maxMeteorite = 11;
 				break;
 
 			default :
-				type = 10;
+				type = 7;
 				break;
 			}
 			                                                            //สุ่มให้เกิดทิศทางไหน
@@ -233,7 +234,7 @@ int main()
 					enemykill = 0;
 					level++;
 					rocket.setHp(rocket.getMaxhp());
-					Maxbulletammo += 10; //เพิ่มกระสุนแต่ละเวล
+					//Maxbulletammo += 15; //เพิ่มกระสุนแต่ละเวล
 					bulletammo = Maxbulletammo;
 					cout << level << endl;
 				}
@@ -242,40 +243,50 @@ int main()
 				{
 				case 1:
 					score += 10;
+					Maxbulletammo += 10;
 					break;
 
 				case 2:
 					score += 10;
+					Maxbulletammo += 15;
 					break;
 
 				case 3:
 					score += 15;
+					Maxbulletammo += 20;
 					break;
 
 				case 4:
 					score += 15;
+					Maxbulletammo += 25;
 					break;
 
 				case 5:
 					score += 25;
+					Maxbulletammo += 30;
 					break;
 
 				case 6:
 					score += 25;
+					Maxbulletammo += 35;
 					break;
 
 				case 7:
 					score += 35;
+					Maxbulletammo += 40;
 					break;
 
 				case 8:
 					score += 35;
+					Maxbulletammo += 45;
 					break;
 				case 9:
 					score += 70;
+					Maxbulletammo += 50;
 					break;
 				case 10:
 					score += 70;
+					Maxbulletammo += 55;
 					break;
 
 				default:
@@ -342,7 +353,7 @@ int main()
 					rocket.setHp(100);//set เลือด
 					break;
 				case 1:
-					isShield = 1;
+					isShield = 3; //1
 					break;
 				case 2:
 					extraLife++;
@@ -351,7 +362,7 @@ int main()
 					score += 100;
 					break;
 				case 4:
-					isSpeed = 1;
+					isSpeed = 3;//1
 					break;
 				default:
 					break;
@@ -376,6 +387,7 @@ int main()
 		if(isShield)
 		{
 			rocket.setTexture(shieldFx);
+
 			if(shieldDuration < shieldDurationMax)
 				shieldDuration += deltaTime;
 			else
@@ -389,7 +401,7 @@ int main()
 		//Speed Up
 		if(isSpeed)
 		{
-			rocket.setSpeed(400.f);
+			rocket.setSpeed(600.f);
 			if(speedupDuration < speedupDurationMax)
 				speedupDuration += deltaTime;
 			else
