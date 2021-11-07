@@ -72,11 +72,11 @@ void Player::update(float deltaTime)
 	//หลอดเลือดผู้เล่น
 	float Hpbar = this->Hp / this->Maxhp;
 	Hpbulb.setSize(Vector2f(Hpbar * 200.0f, 10.0f));
-	Hpbulb.setPosition(Vector2f(50.0f , 30.0f));
+	Hpbulb.setPosition(Vector2f(50.0f , 25.0f));
 	Hpbulb.setScale(Vector2f(2.0, 0.50));
 	//หลอดเลือดแต่ซ้อนกันเป็น 2 มิติ
 	HpbulbMax.setSize(Vector2f(200.0f, 10.0f));
-	HpbulbMax.setPosition(Vector2f(50.0f , 30.0f));
+	HpbulbMax.setPosition(Vector2f(50.0f , 25.0f));
 	HpbulbMax.setScale(Vector2f(2.0, 0.50));
 }
 

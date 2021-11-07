@@ -22,6 +22,16 @@ int& Item::getItem()
 	return item_type;
 }
 
+void Item::updateItem(float deltaTime)
+{
+	timeDuration += deltaTime;
+}
+
+float& Item::getItemTime()
+{
+	return this->timeDuration;
+}
+
 void Item::renderItem(sf::RenderTarget& target)
 {
 	target.draw(item_sprite);

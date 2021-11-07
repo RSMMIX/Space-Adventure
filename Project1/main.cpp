@@ -35,12 +35,11 @@ int main()
 	Texture meteorite;
 	meteorite.loadFromFile("textures/Enemy/6.png");
 
-	Texture itemstexture[5];
+	Texture itemstexture[4];
 	itemstexture[0].loadFromFile("textures/Item/t1.png"); //ซ้อมยาน
 	itemstexture[1].loadFromFile("textures/Item/t2.png"); //โล่
-	itemstexture[2].loadFromFile("textures/Item/t3.png"); //ชีวิตอมตะ
-	itemstexture[3].loadFromFile("textures/Item/t5.png"); //ยิงกระสุนแบบอมตะ
-	itemstexture[4].loadFromFile("textures/Item/t6.png"); //เพิ่มความเร็วยาน
+	itemstexture[2].loadFromFile("textures/Item/t3.png"); //ยิงกระสุนแบบอมตะ
+	itemstexture[3].loadFromFile("textures/Item/t4.png"); //เพิ่มความเร็วยาน
 
 	Texture shieldFx;
 	shieldFx.loadFromFile("textures/Fx/Fx2.png");
@@ -51,23 +50,48 @@ int main()
 	Text scoretext;
 	//score
 	scoretext.setFont(font);
-	scoretext.setCharacterSize(40);
-	scoretext.setPosition(Vector2f(1700.0f , 20.0f));
+	scoretext.setCharacterSize(30);
+	scoretext.setPosition(Vector2f(1740.0f , 20.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
+
+	//textlevel
+	Text Lvl;
+	Lvl.setFont(font);
+	Lvl.setCharacterSize(15);
+	Lvl.setPosition(Vector2f(20.0f, 40.0f));
+	Lvl.setFillColor(Color::White);
+
+	//Hp
+	Text Hp;
+	Hp.setFont(font);
+	Hp.setCharacterSize(15);
+	Hp.setPosition(Vector2f(20.0f, 20.0f));
+	Hp.setFillColor(Color::White);
+	
 
 	Text scorebullet;
 	//scorebullet
 	scorebullet.setFont(font);
-	scorebullet.setCharacterSize(20);
-	scorebullet.setPosition(Vector2f(40.0f, 40.0f));
+	scorebullet.setCharacterSize(15);
+	scorebullet.setPosition(Vector2f(45.0f, 55.0f));
 	scorebullet.setFillColor(Color::White);
+	
+	//หลอดโล่
+	//CircleShape shieldtube;
+	//shieldtube.setRadius(25.0f);
+	//shieldtube.setPosition(40 , 40);
+	//shieldtube.setFillColor(Color(0, 204, 204));
+	//shieldtube.setOutlineColor(Color(0 , 206 , 105));
+	//shieldtube.setOutlineThickness(3.0f);
 
 	//หลอดเลเวล
 	RectangleShape Lvbulb;
 	RectangleShape LvbulbMax;
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
+
+	
 	
 	Clock clock;
 	int level = 1;
@@ -75,7 +99,7 @@ int main()
 	int type;
 	int enemykill = 0;
 	int maxMeteorite = 0;
-	int Maxbulletammo =  60; //จำนวนกรสุน
+	int Maxbulletammo =  100; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
 
 
@@ -209,10 +233,10 @@ int main()
 		//หลอด lv ผู้เล่น
 		float LvBar = (float)enemykill / requireToKill;
 		Lvbulb.setSize(Vector2f(LvBar * 200.0f, 10.0f));
-		Lvbulb.setPosition(Vector2f(50.0f , 35.0f));
+		Lvbulb.setPosition(Vector2f(50.0f , 45.0f));
 		Lvbulb.setScale(Vector2f(2.0, 0.50));
 		LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
-		LvbulbMax.setPosition(Vector2f(50.0f , 35.0f));
+		LvbulbMax.setPosition(Vector2f(50.0f , 45.0f));
 		LvbulbMax.setScale(Vector2f(2.0, 0.50));
 		//ทำคะแนน
 		cout << score << endl;
@@ -220,7 +244,10 @@ int main()
 		scoretext.setString(" SCORE  " + to_string(score));
 		//ทำตัวเลขกระสุน
 		scorebullet.setString(" AMMO  " + to_string(bulletammo));
-
+		//ทำตัวเลือด
+		Hp.setString("Hp");
+		//Level
+		Lvl .setString("Lvl");
 		rocket.update(deltaTime);
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
@@ -295,8 +322,8 @@ int main()
 				}
 				//Spawn Item     
 				int rand_item = rand()% 100;
-				if(rand_item >= 0 && rand_item <= 10)                //สุ่ม 4แบบ
-					items.push_back(Item(&itemstexture[rand() % 5], enemies[i].getPosition(), rand() % 4));
+				if(rand_item >= 0 && rand_item <= 100)          //สุ่ม 4แบบ
+					items.push_back(Item(&itemstexture[rand() % 4], enemies[i].getPosition(), rand() % 4));
 				enemies.erase(enemies.begin() + i);
 				break;
 			}
@@ -345,6 +372,7 @@ int main()
 		//Update Item
 		for(size_t i = 0; i < items.size(); i++)
 		{
+			items[i].updateItem(deltaTime);
 			if (items[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 			{
 				switch(items[i].getItem())
@@ -353,7 +381,7 @@ int main()
 					rocket.setHp(100);//set เลือด
 					break;
 				case 1:
-					isShield = 3; //1
+					isShield = 1;
 					break;
 				case 2:
 					extraLife++;
@@ -362,11 +390,16 @@ int main()
 					score += 100;
 					break;
 				case 4:
-					isSpeed = 3;//1
+					isSpeed = 1;
 					break;
 				default:
 					break;
 				}
+				items.erase(items.begin() + i);
+				break;
+			}
+			if(items[i].getItemTime() > 10.f)
+			{
 				items.erase(items.begin() + i);
 				break;
 			}
@@ -443,6 +476,8 @@ int main()
 		
 		window.draw(scoretext);
 		window.draw(scorebullet);
+		window.draw(Hp);
+		window.draw(Lvl);
 
 		window.draw(LvbulbMax);
 		window.draw(Lvbulb);
