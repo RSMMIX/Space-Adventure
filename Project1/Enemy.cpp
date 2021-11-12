@@ -32,13 +32,6 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 		position.y = rand() % 1080;
 	}
 
-	/*if (randomtype == 2)
-	{
-		//ล่าง
-		position.x = rand() % 1920;
-		position.y = 1180;
-	}*/
-
 	if (randomtype == 2)
 	{
 		//ขวา
@@ -47,7 +40,7 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 	}
 	if (randomtype == 3)
 	{
-		position.x = rand() % 1800 + 100;
+		position.x = rand() % 700;
 		type_4_y = 0.0f;
 	}
 
@@ -66,7 +59,7 @@ void Enemy::update(float deltaTime, Vector2f position)
 	if (randomtype == 3)
 	{
 		type_4_x = sinf(type_4_time += deltaTime) * 300.0f;
-		spacecraft.setPosition((type_4_x) + (500.0f + (4.5 - randomtype) * 500.f), type_4_y -= deltaTime * speed * -100.0f);
+		spacecraft.setPosition((type_4_x) + (this->position.x + (4.5 - randomtype) * 500.f), type_4_y -= deltaTime * speed * -100.0f);
 	}
 	else
 	{

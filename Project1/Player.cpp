@@ -57,12 +57,12 @@ void Player::update(float deltaTime)
 		}
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::Q))
+	if (Keyboard::isKeyPressed(Keyboard::O))
 	{
 		spacecraft.rotate(deltaTime * -momentum);
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::E))
+	if (Keyboard::isKeyPressed(Keyboard::P))
 	{
 		spacecraft.rotate(deltaTime * momentum);
 	}

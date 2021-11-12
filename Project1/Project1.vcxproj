@@ -24,6 +24,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Meteorite.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Meteorite.h" />
     <ClInclude Include="Library.h" />
     <ClInclude Include="Player.h" />

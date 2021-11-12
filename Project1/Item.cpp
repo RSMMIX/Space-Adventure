@@ -4,7 +4,7 @@ Item::Item(sf::Texture* texture, sf::Vector2f init_position, int type)
 {
 	item_texture = texture;
 	item_sprite.setTexture(*item_texture);
-	item_sprite.setScale(sf::Vector2f(0.5f,0.5f));
+	item_sprite.setScale(sf::Vector2f(0.5f , 0.5f));
 	item_sprite.setOrigin(sf::Vector2f(
 	item_sprite.getLocalBounds().width / 2,
 	item_sprite.getLocalBounds().height / 2));
@@ -29,7 +29,7 @@ void Item::updateItem(float deltaTime)
 
 float& Item::getItemTime()
 {
-	return this->timeDuration;
+	return timeDuration;
 }
 
 void Item::renderItem(sf::RenderTarget& target)
