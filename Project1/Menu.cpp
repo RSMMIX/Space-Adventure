@@ -15,17 +15,17 @@ Menu::Menu(sf::RenderWindow* window)
 	score_texture.loadFromFile("textures/Button/button2.png");
 	score_button.setTexture(score_texture);
 	score_button.setOrigin(Vector2f(score_button.getLocalBounds().width / 2, score_button.getLocalBounds().height / 2));
-	score_button.setPosition(Vector2f(960, 500));
+	score_button.setPosition(Vector2f(960, 550));
 
 	tutorial_texture.loadFromFile("textures/Button/button3.png");
 	tutorial_button.setTexture(tutorial_texture);
 	tutorial_button.setOrigin(Vector2f(tutorial_button.getLocalBounds().width / 2, tutorial_button.getLocalBounds().height / 2));
-	tutorial_button.setPosition(Vector2f(960, 650));
+	tutorial_button.setPosition(Vector2f(960, 750));
 
 	quit_texture.loadFromFile("textures/Button/button4.png");
 	quit_button.setTexture(quit_texture);
 	quit_button.setOrigin(Vector2f(quit_button.getLocalBounds().width / 2, quit_button.getLocalBounds().height / 2));
-	quit_button.setPosition(Vector2f(960, 800));
+	quit_button.setPosition(Vector2f(960, 950));
 }
 
 void Menu::updateMenuState(int action)
@@ -41,23 +41,23 @@ int Menu::getMenuState()
 void Menu::updateMenu()
 {
         //Play
-		if (this->play_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (play_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
-			this->play_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			play_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				this->updateMenuState(2);
+				updateMenuState(2);
 			}
 		}
 		else
 		{
-			this->play_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			play_button.setScale(sf::Vector2f(1.0f, 1.0f));
 		}
 
 		//Tutorial
-		if (this->tutorial_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (tutorial_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
-			this->tutorial_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			tutorial_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				//this->updateMenuState(4);
@@ -65,13 +65,13 @@ void Menu::updateMenu()
 		}
 		else
 		{
-			this->tutorial_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			tutorial_button.setScale(sf::Vector2f(1.0f, 1.0f));
 		}
 
 		//Score
-		if (this->score_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (score_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
-			this->score_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			score_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				//this->updateMenuState(3);
@@ -79,21 +79,21 @@ void Menu::updateMenu()
 		}
 		else
 		{
-			this->score_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			score_button.setScale(sf::Vector2f(1.0f, 1.0f));
 		}
 
 		//Quit
-		if (this->quit_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (quit_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
-			this->quit_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			quit_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-			    this->updateMenuState(5);
+			    >updateMenuState(5);
 			}
 		}
 		else
 		{
-			this->quit_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			quit_button.setScale(sf::Vector2f(1.0f, 1.0f));
 		}
 }
 

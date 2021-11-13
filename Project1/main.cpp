@@ -10,7 +10,7 @@
 int main()
 {
 	srand(time_t(static_cast<unsigned>(NULL)));
-	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Close | Style::Titlebar);
+	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Fullscreen | Style::Titlebar);
 	Menu menu(&window);
 	vector < Bullet > bullets;
 	vector < Enemy > enemies;
