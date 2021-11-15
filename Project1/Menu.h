@@ -15,16 +15,16 @@ class Menu
         Sprite play_button;
 
         //Scoreboard Button
-        sf::Texture score_texture;
-        sf::Sprite score_button;
+        Texture score_texture;
+        Sprite score_button;
 
         //Tutorial Button
-        sf::Texture tutorial_texture;
-        sf::Sprite tutorial_button;
+        Texture tutorial_texture;
+        Sprite tutorial_button;
 
         //Quit Button
-        sf::Texture quit_texture;
-        sf::Sprite quit_button;
+        Texture quit_texture;
+        Sprite quit_button;
 
         //playname
         Texture player_texture;
@@ -41,12 +41,12 @@ class Menu
         int action;
         
         //Name Input
-        std::string player_name;
-        sf::Text name_input;
+        string player_name;
+        Text name_input;
 
         //how to play
-        sf::Texture how_texture;
-        sf::Sprite how_sprite;
+        Texture how_texture;
+        Sprite how_sprite;
 
         //back button
         Texture howback_texture;
