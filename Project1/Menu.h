@@ -7,12 +7,12 @@ class Menu
         Event ev;
         Font font;
         //Background
-        sf::Texture bg_texture;
-        sf::Sprite bg_sprite;
+        Texture bg_texture;
+        Sprite bg_sprite;
 
         //Play Button
-        sf::Texture play_texture;
-        sf::Sprite play_button;
+        Texture play_texture;
+        Sprite play_button;
 
         //Scoreboard Button
         sf::Texture score_texture;
