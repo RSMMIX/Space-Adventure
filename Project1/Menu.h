@@ -3,9 +3,9 @@
 class Menu
 {
     private:
-        sf::RenderWindow* window;
-        sf::Event ev;
-        sf::Font font;
+        RenderWindow* window;
+        Event ev;
+        Font font;
         //Background
         sf::Texture bg_texture;
         sf::Sprite bg_sprite;
