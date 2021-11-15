@@ -5,6 +5,10 @@
 #include<SFML/System.hpp>
 #include<SFML/Window.hpp>
 #include<iostream>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <vector>
 #include<time.h>
 #include<cmath>
 

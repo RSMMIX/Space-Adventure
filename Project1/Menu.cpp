@@ -26,6 +26,32 @@ Menu::Menu(sf::RenderWindow* window)
 	quit_button.setTexture(quit_texture);
 	quit_button.setOrigin(Vector2f(quit_button.getLocalBounds().width / 2, quit_button.getLocalBounds().height / 2));
 	quit_button.setPosition(Vector2f(960, 950));
+
+	player_texture.loadFromFile("textures/menu/playmenu.jpg");
+	player_sprite.setTexture(player_texture);
+
+	back_texture.loadFromFile("textures/Button/back.png");
+	back_button.setTexture(back_texture);
+	back_button.setPosition(Vector2f(250, 750));
+
+	go_texture.loadFromFile("textures/Button/play.png");
+	go_button.setTexture(go_texture);
+	go_button.setPosition(Vector2f(1170, 750));
+
+	font.loadFromFile("fonts/Blern regular.ttf");
+	name_input.setFont(font);
+	name_input.setCharacterSize(60);
+	name_input.setOrigin(Vector2f(0,name_input.getLocalBounds().height / 2 ));
+	name_input.setPosition(Vector2f(800, 425));
+
+	//howtoplay
+	how_texture.loadFromFile("textures/menu/howtoplay.jpg");
+	how_sprite.setTexture(how_texture);
+
+	// back how to play
+	howback_texture.loadFromFile("textures/Button/back.png");
+	howback_button.setTexture(howback_texture);
+	howback_button.setPosition(Vector2f(20, 900));
 }
 
 void Menu::updateMenuState(int action)
@@ -46,7 +72,7 @@ void Menu::updateMenu()
 			play_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				updateMenuState(2);
+				updateMenuState(1);
 			}
 		}
 		else
@@ -60,7 +86,7 @@ void Menu::updateMenu()
 			tutorial_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				//this->updateMenuState(4);
+				updateMenuState(4);
 			}
 		}
 		else
@@ -88,7 +114,7 @@ void Menu::updateMenu()
 			quit_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-			    >updateMenuState(5);
+			    updateMenuState(5);
 			}
 		}
 		else
@@ -97,9 +123,99 @@ void Menu::updateMenu()
 		}
 }
 
+void Menu::updateNameInput(sf::Event& event)
+{
+	ev = event;
+	if (player_name == "" && !(ev.type == sf::Event::TextEntered))
+	{
+		name_input.setString("Type your name");
+		type_bounce = 0;
+		valid_name = 0;
+	}
+	else
+	{
+		if (event.type == sf::Event::TextEntered)
+		{
+			if (event.text.unicode != 32 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !this->type_bounce)
+			{
+				type_bounce = 1;
+				if (event.text.unicode == 8 && player_name.length() > 0)
+				{
+					player_name.erase(player_name.length() - 1);
+				}
+				else if (event.text.unicode < 128 && player_name.length() < 15 && event.text.unicode != 8)
+				{
+					player_name += static_cast<char>(event.text.unicode);
+				}
+				name_input.setString(player_name);
+			}
+		}
+		else
+			type_bounce = 0;
+		valid_name = 1;
+	}
+}
+
+void Menu::updateName()
+{
+	if (go_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		{
+			go_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				updateMenuState(2);
+			}
+		}
+		else
+		{
+			go_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		}
+
+	if (back_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		{
+			back_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				updateMenuState(0);
+			}
+		}
+		else
+		{
+			back_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		}
+}
+
+void Menu::updateHow()
+{
+	if (howback_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		{
+			howback_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				updateMenuState(0);
+			}
+		}
+		else
+		{
+			howback_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		}
+}
+
+void Menu::renderName()
+{
+	window->clear();
+
+	window->draw(player_sprite);
+	window->draw(back_button);
+	window->draw(go_button);
+	window->draw(name_input);
+
+	window->display();
+}
+
 void Menu::renderMenu()
 {
-    window->clear();
+	window->clear();
 
     window->draw(bg_sprite);
     window->draw(play_button);
@@ -108,4 +224,14 @@ void Menu::renderMenu()
     window->draw(quit_button);
     
     window->display();
+}
+
+void Menu::renderHow()
+{
+	window->clear();
+
+	window->draw(how_sprite);
+	window->draw(howback_button);
+
+	window->display();
 }

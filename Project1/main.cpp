@@ -12,16 +12,16 @@ int main()
 	srand(time_t(static_cast<unsigned>(NULL)));
 	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Fullscreen | Style::Titlebar);
 	Menu menu(&window);
-	vector < Bullet > bullets;
-	vector < Enemy > enemies;
-	vector < Item > items;
-	vector < Meteorite > meteorites;
+	vector<Bullet> bullets;
+	vector<Enemy> enemies;
+	vector<Item> items;
+	vector<Meteorite> meteorites;
 	Background background;
 
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
 	Player rocket(spaceship, 100);
-	
+
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
 
@@ -40,15 +40,12 @@ int main()
 	Texture itemstexture[4];
 	itemstexture[0].loadFromFile("textures/Item/t1.png"); //ซ้อมยาน
 	itemstexture[1].loadFromFile("textures/Item/t2.png"); //โล่
-	itemstexture[2].loadFromFile("textures/Item/t3.png"); //ยิงกระสุนแบบอมตะ
+	itemstexture[2].loadFromFile("textures/Item/t3.png"); //เพิมกระสุน
 	itemstexture[3].loadFromFile("textures/Item/t4.png"); //เพิ่มความเร็วยาน
 
 	Texture shieldFx;
 	shieldFx.loadFromFile("textures/Fx/Fx2.png");
 
-	//Texture symbol;
-	//symbol.loadFromFile("textures/Fx/Fx3.png");
-	
 	//ฟอนต์score
 	Font font;
 	font.loadFromFile("fonts/Blern regular.ttf");
@@ -56,7 +53,7 @@ int main()
 	//score
 	scoretext.setFont(font);
 	scoretext.setCharacterSize(30);
-	scoretext.setPosition(Vector2f(1740.0f , 20.0f));
+	scoretext.setPosition(Vector2f(1740.0f, 20.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
 
@@ -73,15 +70,15 @@ int main()
 	Hp.setCharacterSize(15);
 	Hp.setPosition(Vector2f(20.0f, 20.0f));
 	Hp.setFillColor(Color::White);
-	
+
 
 	Text scorebullet;
 	//scorebullet
 	scorebullet.setFont(font);
 	scorebullet.setCharacterSize(15);
-	scorebullet.setPosition(Vector2f(45.0f, 55.0f));
+	scorebullet.setPosition(Vector2f(55.0f, 55.0f));
 	scorebullet.setFillColor(Color::White);
-	
+
 
 
 	//หลอดเลเวล
@@ -90,19 +87,19 @@ int main()
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
 
-	
-	
+
+
 	Clock clock;
 	int level = 1;
 	int requireToKill = 5;
 	int type;
 	int enemykill = 0;
 	int maxMeteorite = 0;
-	int Maxbulletammo =  100; //จำนวนกรสุน
+	int Maxbulletammo = 100; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
 
 
-	float speed = 150.f;
+	float speed = 0.f;
 	float showtime = 0.0f;
 	float deltaTime = 0;
 	float sumtime = 0;
@@ -110,7 +107,7 @@ int main()
 
 	bool stopSpawn = 1;
 	float stopSpawnDelay = 0.0f;
-	
+
 	//Invincible
 	bool isShield = 0;
 	float shieldDuration = 0.0f;
@@ -119,7 +116,7 @@ int main()
 	int extraLife = 0;
 
 	//Speed Up
-	bool isSpeed = 0; 
+	bool isSpeed = 0;
 	float speedupDuration = 0.f;
 	float speedupDurationMax = 10.f;
 
@@ -144,11 +141,20 @@ int main()
 		}
 
 		action = menu.getMenuState();
-		switch(action)
+		switch (action)
 		{
 		case 0://Menu
 			menu.updateMenu();
 			menu.renderMenu();
+			break;
+		case 1://Name
+			menu.updateName();
+			menu.updateNameInput(ev);
+			menu.renderName();
+			break;
+		case 4://How to play
+			menu.updateHow();
+			menu.renderHow();
 			break;
 		case 5:
 			window.close();
@@ -157,8 +163,8 @@ int main()
 			sumtime += deltaTime;
 			showtime += deltaTime;
 			bullettime += deltaTime;
-			
-			if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f &&  bulletammo > 0)
+
+			if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f && bulletammo > 0)
 			{
 				bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
 				bulletammo--;
@@ -229,29 +235,29 @@ int main()
 					maxMeteorite = 11;
 					break;
 
-				default :
+				default:
 					type = 7;
 					break;
 				}
-																			//สุ่มให้เกิดทิศทางไหน
-				enemies.push_back(Enemy(&enemy[rand() % type], 10 , level, rand() % 3 + 1));
+				//สุ่มให้เกิดทิศทางไหน
+				enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
 				sumtime = 0.f;
 			}
 			//Spawn Meteorite
-			if(meteorites.size() < maxMeteorite)
+			if (meteorites.size() < maxMeteorite)
 			{
 				meteorites.push_back(Meteorite(&meteorite));
 			}
-			
+
 			// ↓ Update
 
 			//หลอด lv ผู้เล่น
 			float LvBar = (float)enemykill / requireToKill;
 			Lvbulb.setSize(Vector2f(LvBar * 200.0f, 10.0f));
-			Lvbulb.setPosition(Vector2f(50.0f , 45.0f));
+			Lvbulb.setPosition(Vector2f(60.0f, 45.0f));
 			Lvbulb.setScale(Vector2f(2.0, 0.50));
 			LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
-			LvbulbMax.setPosition(Vector2f(50.0f , 45.0f));
+			LvbulbMax.setPosition(Vector2f(60.0f, 45.0f));
 			LvbulbMax.setScale(Vector2f(2.0, 0.50));
 			//ทำคะแนน
 			cout << score << endl;
@@ -265,7 +271,7 @@ int main()
 			Hp.setString("Hp");
 
 			//Level
-			Lvl .setString("Lvl");
+			Lvl.setString("Lvl " + to_string(level));
 			rocket.update(deltaTime);
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
@@ -288,60 +294,65 @@ int main()
 					{
 					case 1:
 						score += 10;
-						Maxbulletammo += 10;
+						Maxbulletammo += 20;
 						break;
 
 					case 2:
 						score += 10;
-						Maxbulletammo += 15;
+						Maxbulletammo += 35;
 						break;
 
 					case 3:
 						score += 15;
-						Maxbulletammo += 20;
+						Maxbulletammo += 50;
 						break;
 
 					case 4:
 						score += 15;
-						Maxbulletammo += 25;
+						Maxbulletammo += 75;
 						break;
 
 					case 5:
 						score += 25;
-						Maxbulletammo += 30;
+						Maxbulletammo += 95;
 						break;
 
 					case 6:
 						score += 25;
-						Maxbulletammo += 35;
+						Maxbulletammo += 115;
 						break;
 
 					case 7:
 						score += 35;
-						Maxbulletammo += 40;
+						Maxbulletammo += 135;
 						break;
 
 					case 8:
 						score += 35;
-						Maxbulletammo += 45;
+						Maxbulletammo += 155;
 						break;
 					case 9:
 						score += 70;
-						Maxbulletammo += 50;
+						Maxbulletammo += 175;
 						break;
 					case 10:
 						score += 70;
-						Maxbulletammo += 55;
+						Maxbulletammo += 200;
 						break;
 
 					default:
-						score: 10;
+					score: 10;
 						break;
 					}
-					//Spawn Item     
+
+					//Spawn Item
 					int rand_item = rand() % 50;
-					if(rand_item >= 0 && rand_item <= 50)          //สุ่ม 4แบบ
-						items.push_back(Item(&itemstexture[rand() % 4], enemies[i].getPosition(), rand() % 4));
+					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
+					{
+						int r = rand() % 4; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
+						items.push_back(Item(&itemstexture[r], enemies[i].getPosition(), r));
+					}
+					
 					enemies.erase(enemies.begin() + i);
 					break;
 				}
@@ -359,28 +370,29 @@ int main()
 						bullets.erase(bullets.begin() + j);
 					}
 				}
-				
+
 				//ลดเลือดเราเวลาศัตรูชน	
 				if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 				{
-					if(!isShield)
+					if (!isShield)
 						rocket.setHp(-enemies[i].getdamage());
 					enemies.erase(enemies.begin() + i);
 					break;
 				}
-					
+
 			}
+
 			for (Bullet& Fbullet : bullets)
 			{
 				Fbullet.update(deltaTime);
 			}
 			//Update Meteorite
-			for(size_t i = 0; i < meteorites.size(); i++)
+			for (size_t i = 0; i < meteorites.size(); i++)
 			{
 				meteorites[i].update(deltaTime);
 				if (meteorites[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 				{
-					if(!isShield)
+					if (!isShield)
 						rocket.setHp(-meteorites[i].getdamage());
 					meteorites.erase(meteorites.begin() + i);
 					break;
@@ -388,21 +400,22 @@ int main()
 			}
 
 			//Update Item
-			for(size_t i = 0; i < items.size(); i++)
+			for (size_t i = 0; i < items.size(); i++)
 			{
 				items[i].updateItem(deltaTime);
 				if (items[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
 				{
-					switch(items[i].getItem())
+					switch (items[i].getItem())
 					{
 					case 0:
-						rocket.setHp(100);//set เลือด
+						rocket.setHp(20);//set เลือด
 						break;
 					case 1:
 						isShield = 1;
 						break;
 					case 2:
-						extraLife++;
+						//extraLife++;
+						bulletammo += 50;
 						break;
 					case 3:
 						isSpeed = 1;
@@ -413,17 +426,17 @@ int main()
 					items.erase(items.begin() + i);
 					break;
 				}
-				if(items[i].getItemTime() > 10.f)
+				if (items[i].getItemTime() > 10.f)
 				{
 					items.erase(items.begin() + i);
 					break;
 				}
 			}
-			
+
 			//Update Stop Spawn Time
-			if(stopSpawn)
+			if (stopSpawn)
 			{
-				if(stopSpawnDelay < 5.0f)
+				if (stopSpawnDelay < 3.0f)
 					stopSpawnDelay += deltaTime;
 				else
 				{
@@ -432,11 +445,11 @@ int main()
 				}
 			}
 			//ทำโล่
-			if(isShield)
+			if (isShield)
 			{
 				rocket.setTexture(shieldFx);
 
-				if(shieldDuration < shieldDurationMax)
+				if (shieldDuration < shieldDurationMax)
 					shieldDuration += deltaTime;
 				else
 				{
@@ -445,12 +458,12 @@ int main()
 					shieldDuration = 0.f;
 				}
 			}
-			
+
 			//Speed Up
-			if(isSpeed)
+			if (isSpeed)
 			{
-				rocket.setSpeed(1000.f);
-				if(speedupDuration < speedupDurationMax)
+				rocket.setSpeed(800.f);
+				if (speedupDuration < speedupDurationMax)
 					speedupDuration += deltaTime;
 				else
 				{
@@ -459,19 +472,19 @@ int main()
 				}
 			}
 			else
-				rocket.setSpeed(200.f);
+				rocket.setSpeed(300.f); //200
 
 			window.clear();
-			
+
 			// ↓ Draw
 			background.draw(window);
 
-			for (Bullet& Fbullet: bullets)
+			for (Bullet& Fbullet : bullets)
 			{
 				Fbullet.draw(window);
 			}
 
-			for (Enemy& Fenemy :enemies)
+			for (Enemy& Fenemy : enemies)
 			{
 				Fenemy.draw(window);
 			}
@@ -481,7 +494,7 @@ int main()
 				Fmeteorites.draw(window);
 			}
 
-			for (Item& Fitems: items)
+			for (Item& Fitems : items)
 			{
 				Fitems.renderItem(window);
 			}
@@ -499,9 +512,9 @@ int main()
 
 			window.display();
 			break;
-			
+
 		}
-		
+
 	}
 	return 0;
 }
