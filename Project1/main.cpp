@@ -178,61 +178,61 @@ int main()
 				case 1:
 					type = 1;
 					requireToKill = 5;
-					maxMeteorite = 0;
+					//maxMeteorite = 0;
 					break;
 
 				case 2:
 					type = 2;
 					requireToKill = 7;
-					maxMeteorite = 1;
+					//maxMeteorite = 1;
 					break;
 
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 4;
+					//maxMeteorite = 4;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					maxMeteorite = 5;
+					//maxMeteorite = 5;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					maxMeteorite = 6;
+					//maxMeteorite = 6;
 					break;
 
 				case 6:
 					type = 4;
 					requireToKill = 19;
-					maxMeteorite = 7;
+					//maxMeteorite = 7;
 					break;
 
 				case 7:
 					type = 5;
 					requireToKill = 21;
-					maxMeteorite = 8;
+					//maxMeteorite = 8;
 					break;
 
 				case 8:
 					type = 6;
 					requireToKill = 25;
-					maxMeteorite = 9;
+					//maxMeteorite = 9;
 					break;
 
 				case 9:
 					type = 7;
 					requireToKill = 31;
-					maxMeteorite = 10;
+					//maxMeteorite = 10;
 					break;
 
 				case 10:
 					type = 7;
 					requireToKill = 41;
-					maxMeteorite = 11;
+					//maxMeteorite = 11;
 					break;
 
 				default:
@@ -293,51 +293,51 @@ int main()
 					switch (level)
 					{
 					case 1:
-						score += 10;
+						score += 30;
 						Maxbulletammo += 20;
 						break;
 
 					case 2:
-						score += 10;
-						Maxbulletammo += 35;
+						score += 30;
+						Maxbulletammo += 20;
 						break;
 
 					case 3:
-						score += 15;
-						Maxbulletammo += 50;
+						score += 65;
+						Maxbulletammo += 20;
 						break;
 
 					case 4:
-						score += 15;
-						Maxbulletammo += 75;
+						score += 65;
+						Maxbulletammo += 20;
 						break;
 
 					case 5:
-						score += 25;
-						Maxbulletammo += 95;
+						score += 85;
+						Maxbulletammo += 20;
 						break;
 
 					case 6:
-						score += 25;
-						Maxbulletammo += 115;
+						score += 85;
+						Maxbulletammo += 20;
 						break;
 
 					case 7:
-						score += 35;
-						Maxbulletammo += 135;
+						score += 115;
+						Maxbulletammo += 20;
 						break;
 
 					case 8:
-						score += 35;
-						Maxbulletammo += 155;
+						score += 115;
+						Maxbulletammo += 20;
 						break;
 					case 9:
-						score += 70;
-						Maxbulletammo += 175;
+						score += 150;
+						Maxbulletammo += 100;
 						break;
 					case 10:
-						score += 70;
-						Maxbulletammo += 200;
+						score += 150;
+						Maxbulletammo += 20;
 						break;
 
 					default:
@@ -346,7 +346,7 @@ int main()
 					}
 
 					//Spawn Item
-					int rand_item = rand() % 50;
+					int rand_item = rand() % 300;
 					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
 					{
 						int r = rand() % 4; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
@@ -462,7 +462,7 @@ int main()
 			//Speed Up
 			if (isSpeed)
 			{
-				rocket.setSpeed(800.f);
+				rocket.setSpeed(600.f);
 				if (speedupDuration < speedupDurationMax)
 					speedupDuration += deltaTime;
 				else
