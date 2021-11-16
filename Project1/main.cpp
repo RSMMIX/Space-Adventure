@@ -10,7 +10,7 @@
 int main()
 {
 	srand(time_t(static_cast<unsigned>(NULL)));
-	RenderWindow window(VideoMode(1920, 1080), "My Game", Style::Fullscreen | Style::Titlebar);
+	RenderWindow window(VideoMode(1920, 1080), "Adventure Shooting Dragons In Space", Style::Fullscreen | Style::Titlebar);
 	Menu menu(&window);
 	vector<Bullet> bullets;
 	vector<Enemy> enemies;
@@ -20,7 +20,7 @@ int main()
 
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
-	Player rocket(spaceship, 100);
+	Player *rocket = new Player(spaceship, 100);
 
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
@@ -46,9 +46,18 @@ int main()
 	Texture shieldFx;
 	shieldFx.loadFromFile("textures/Fx/Fx2.png");
 
-	//ฟอนต์score
 	Font font;
 	font.loadFromFile("fonts/Blern regular.ttf");
+
+	//Player Name //set***
+	string player_name;
+	Text name_text;
+	name_text.setFont(font);
+	name_text.setCharacterSize(24);
+	name_text.setPosition(Vector2f(100.0f, 25.0f));
+	name_text.setFillColor(Color::White);
+
+	//ฟอนต์score
 	Text scoretext;
 	//score
 	scoretext.setFont(font);
@@ -71,7 +80,6 @@ int main()
 	Hp.setPosition(Vector2f(20.0f, 20.0f));
 	Hp.setFillColor(Color::White);
 
-
 	Text scorebullet;
 	//scorebullet
 	scorebullet.setFont(font);
@@ -79,15 +87,11 @@ int main()
 	scorebullet.setPosition(Vector2f(55.0f, 55.0f));
 	scorebullet.setFillColor(Color::White);
 
-
-
 	//หลอดเลเวล
 	RectangleShape Lvbulb;
 	RectangleShape LvbulbMax;
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
-
-
 
 	Clock clock;
 	int level = 1;
@@ -97,7 +101,6 @@ int main()
 	int maxMeteorite = 0;
 	int Maxbulletammo = 100; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
-
 
 	float speed = 0.f;
 	float showtime = 0.0f;
@@ -151,6 +154,12 @@ int main()
 			menu.updateName();
 			menu.updateNameInput(ev);
 			menu.renderName();
+			player_name = menu.getName();
+			name_text.setString(player_name);
+			break;
+		case 3://face pauseport
+			menu.updatePause();
+			menu.renderPause();
 			break;
 		case 4://How to play
 			menu.updateHow();
@@ -159,14 +168,20 @@ int main()
 		case 5:
 			window.close();
 			break;
+		case 6://Game over
+			menu.updateGameOver();
+			menu.remderGameOver();
+			break;
 		case 2://Play 
 			sumtime += deltaTime;
 			showtime += deltaTime;
 			bullettime += deltaTime;
 
+			menu.checktriggerPause();
+
 			if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f && bulletammo > 0)
 			{
-				bullets.push_back(Bullet(&shot, rocket.spacecraft.getPosition(), rocket.spacecraft.getRotation()));
+				bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation()));
 				bulletammo--;
 				bullettime = 0.0f;
 			}
@@ -178,61 +193,61 @@ int main()
 				case 1:
 					type = 1;
 					requireToKill = 5;
-					//maxMeteorite = 0;
+					maxMeteorite = 0;
 					break;
 
 				case 2:
 					type = 2;
 					requireToKill = 7;
-					//maxMeteorite = 1;
+					maxMeteorite = 1;
 					break;
 
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					//maxMeteorite = 4;
+					maxMeteorite = 4;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					//maxMeteorite = 5;
+					maxMeteorite = 5;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					//maxMeteorite = 6;
+					maxMeteorite = 6;
 					break;
 
 				case 6:
 					type = 4;
 					requireToKill = 19;
-					//maxMeteorite = 7;
+					maxMeteorite = 7;
 					break;
 
 				case 7:
 					type = 5;
 					requireToKill = 21;
-					//maxMeteorite = 8;
+					maxMeteorite = 8;
 					break;
 
 				case 8:
 					type = 6;
 					requireToKill = 25;
-					//maxMeteorite = 9;
+					maxMeteorite = 9;
 					break;
 
 				case 9:
 					type = 7;
 					requireToKill = 31;
-					//maxMeteorite = 10;
+					maxMeteorite = 10;
 					break;
 
 				case 10:
 					type = 7;
 					requireToKill = 41;
-					//maxMeteorite = 11;
+					maxMeteorite = 11;
 					break;
 
 				default:
@@ -272,10 +287,10 @@ int main()
 
 			//Level
 			Lvl.setString("Lvl " + to_string(level));
-			rocket.update(deltaTime);
+			rocket->update(deltaTime);
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
-				enemies[i].update(deltaTime, rocket.spacecraft.getPosition());
+				enemies[i].update(deltaTime, rocket->spacecraft.getPosition());
 				if (enemies[i].getHp() <= 0)
 				{
 					//เลเวลเมื่อคิวได้
@@ -284,7 +299,7 @@ int main()
 					{
 						enemykill = 0;
 						level++;
-						rocket.setHp(rocket.getMaxhp());
+						rocket->setHp(rocket->getMaxhp());
 						//Maxbulletammo += 15; //เพิ่มกระสุนแต่ละเวล
 						bulletammo = Maxbulletammo;
 						cout << level << endl;
@@ -372,10 +387,10 @@ int main()
 				}
 
 				//ลดเลือดเราเวลาศัตรูชน	
-				if (enemies[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+				if (enemies[i].getGlobalBounds().intersects(rocket->spacecraft.getGlobalBounds()))
 				{
 					if (!isShield)
-						rocket.setHp(-enemies[i].getdamage());
+						rocket->setHp(-enemies[i].getdamage());
 					enemies.erase(enemies.begin() + i);
 					break;
 				}
@@ -390,10 +405,15 @@ int main()
 			for (size_t i = 0; i < meteorites.size(); i++)
 			{
 				meteorites[i].update(deltaTime);
-				if (meteorites[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+				if (meteorites[i].getGlobalBounds().intersects(rocket->spacecraft.getGlobalBounds()))
 				{
 					if (!isShield)
-						rocket.setHp(-meteorites[i].getdamage());
+						rocket->setHp(-meteorites[i].getdamage());
+					meteorites.erase(meteorites.begin() + i);
+					break;
+				}
+				if(meteorites[i].getPosition().y > window.getSize().y)
+				{
 					meteorites.erase(meteorites.begin() + i);
 					break;
 				}
@@ -403,12 +423,12 @@ int main()
 			for (size_t i = 0; i < items.size(); i++)
 			{
 				items[i].updateItem(deltaTime);
-				if (items[i].getGlobalBounds().intersects(rocket.spacecraft.getGlobalBounds()))
+				if (items[i].getGlobalBounds().intersects(rocket->spacecraft.getGlobalBounds()))
 				{
 					switch (items[i].getItem())
 					{
 					case 0:
-						rocket.setHp(20);//set เลือด
+						rocket->setHp(20);//set เลือด
 						break;
 					case 1:
 						isShield = 1;
@@ -447,14 +467,14 @@ int main()
 			//ทำโล่
 			if (isShield)
 			{
-				rocket.setTexture(shieldFx);
+				rocket->setTexture(shieldFx);
 
 				if (shieldDuration < shieldDurationMax)
 					shieldDuration += deltaTime;
 				else
 				{
 					isShield = 0;
-					rocket.setTexture(spaceship);
+					rocket->setTexture(spaceship);
 					shieldDuration = 0.f;
 				}
 			}
@@ -462,7 +482,7 @@ int main()
 			//Speed Up
 			if (isSpeed)
 			{
-				rocket.setSpeed(600.f);
+				rocket->setSpeed(600.f);
 				if (speedupDuration < speedupDurationMax)
 					speedupDuration += deltaTime;
 				else
@@ -472,7 +492,7 @@ int main()
 				}
 			}
 			else
-				rocket.setSpeed(300.f); //200
+				rocket->setSpeed(300.f); //200
 
 			window.clear();
 
@@ -499,7 +519,18 @@ int main()
 				Fitems.renderItem(window);
 			}
 
-			rocket.draw(window);
+			if(rocket->getHp() <= 0)
+			{
+				enemies.clear();
+				meteorites.clear();
+				bullets.clear();
+				items.clear();
+
+				//delete 
+				menu.updateMenuState(6);
+			}
+
+			rocket->draw(window);
 
 
 			window.draw(scoretext);
@@ -509,6 +540,8 @@ int main()
 
 			window.draw(LvbulbMax);
 			window.draw(Lvbulb);
+
+			window.draw(name_text);
 
 			window.display();
 			break;

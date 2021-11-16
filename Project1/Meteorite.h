@@ -12,6 +12,10 @@ public:
 	{ 
 		return metorite_sprite.getGlobalBounds(); 
 	}
+	Vector2f getPosition()
+	{
+		return metorite_sprite.getPosition();
+	}
 
 private:
 	Sprite metorite_sprite;

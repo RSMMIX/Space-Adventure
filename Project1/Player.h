@@ -15,8 +15,10 @@ public:
 	void draw(RenderWindow &window);
 	void setHp(float Hp);
 	void setSpeed(int value);
+	void setTexture(Texture& texture);
 	float getMaxhp();
-	void setTexture(Texture &texture);
+	float getHp();
+
 private:
 	Vector2f direction;
 	float speed, momentum;

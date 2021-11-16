@@ -106,6 +106,11 @@ float Player::getMaxhp()
 	return Maxhp;
 }
 
+float Player::getHp()
+{
+	return Hp;
+}
+
 void Player::setTexture(Texture& texture)
 {
 	spacecraft.setTexture(texture);

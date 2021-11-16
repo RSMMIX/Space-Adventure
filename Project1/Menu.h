@@ -43,6 +43,7 @@ class Menu
         //Name Input
         string player_name;
         Text name_input;
+        Text name_creator;
 
         //how to play
         Texture how_texture;
@@ -51,12 +52,34 @@ class Menu
         //back button
         Texture howback_texture;
         Sprite  howback_button;
+        
+        //gameover
+        Texture over_texture;
+        Sprite over_sprite;
+
+        //backover
+        Texture backov_texture;
+        Sprite  backov_button;
+
+        //bg paus
+        Texture bgpa_texture;
+        Sprite bgpa_sprite;
+        //button playpase
+        Texture playpa_texture;
+        Sprite  playpa_button;
+        //button backpase
+        Texture blackpa_texture;
+        Sprite  blackpa_button;
 
         bool type_bounce;
         bool valid_name;
 
+        bool escape_bounce;
+
     public:
         Menu(sf::RenderWindow* window);
+
+        string getName();
         
         void updateMenuState(int action);
 
@@ -76,5 +99,14 @@ class Menu
 
         void renderMenu();
 
+        void updatePause();
+
+        void renderPause();
+
+        void updateGameOver();
+
+        void remderGameOver();
+
+        void checktriggerPause();
 };
 
