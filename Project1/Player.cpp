@@ -108,11 +108,11 @@ float Player::getMaxhp()
 
 void Player::setTexture(Texture& texture)
 {
-	this->spacecraft.setTexture(texture);
+	spacecraft.setTexture(texture);
 }
 
 void Player::setSpeed(int value)
 {
-	this->speed = value;
+	speed = value;
 }
 

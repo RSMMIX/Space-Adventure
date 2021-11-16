@@ -40,7 +40,7 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 	}
 	if (randomtype == 3)
 	{
-		position.x = rand() % 700;
+		position.x = rand() % 1000 + 100;
 		type_4_y = 0.0f;
 	}
 
