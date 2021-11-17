@@ -32,23 +32,23 @@ Menu::Menu(sf::RenderWindow* window)
 
 	back_texture.loadFromFile("textures/Button/back.png");
 	back_button.setTexture(back_texture);
-	back_button.setPosition(Vector2f(250, 750));
+	back_button.setPosition(Vector2f(250, 760));
 
-	go_texture.loadFromFile("textures/Button/play.png");
+	go_texture.loadFromFile("textures/Button/play1.png");
 	go_button.setTexture(go_texture);
-	go_button.setPosition(Vector2f(1170, 750));
+	go_button.setPosition(Vector2f(1170, 760));
 
 	//name
 	font.loadFromFile("fonts/Blern regular.ttf");
 	name_input.setFont(font);
 	name_input.setCharacterSize(60);
 	name_input.setOrigin(Vector2f(0,name_input.getLocalBounds().height / 2 ));
-	name_input.setPosition(Vector2f(800, 425));
+	name_input.setPosition(Vector2f(770, 425));
 
 	//name creator name
 	name_creator.setFont(font);
 	name_creator.setCharacterSize(30);
-	name_creator.setPosition(Vector2f(1470, 15));
+	name_creator.setPosition(Vector2f(1450, 15));
 
 	//howtoplay
 	how_texture.loadFromFile("textures/menu/howtoplay.jpg");
@@ -67,7 +67,7 @@ Menu::Menu(sf::RenderWindow* window)
 	backov_texture.loadFromFile("textures/Button/back.png");
 	backov_button.setTexture(backov_texture);
 	backov_button.setOrigin(Vector2f(play_button.getLocalBounds().width / 2, play_button.getLocalBounds().height / 2));
-	backov_button.setPosition(Vector2f(960, 850));
+	backov_button.setPosition(Vector2f(960, 840));
 
 	//bg paus
 	bgpa_texture.loadFromFile("textures/menu/gameover.jpg");

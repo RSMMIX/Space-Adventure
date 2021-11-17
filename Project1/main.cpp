@@ -20,7 +20,7 @@ int main()
 
 	Texture spaceship;
 	spaceship.loadFromFile("textures/Spaceship/mship1.png");
-	Player *rocket = new Player(spaceship, 100);
+	Player* rocket = new Player(spaceship, 100);
 
 	Texture shot;
 	shot.loadFromFile("textures/Bullet/buttet.png");
@@ -37,11 +37,12 @@ int main()
 	Texture meteorite;
 	meteorite.loadFromFile("textures/Enemy/6.png");
 
-	Texture itemstexture[4];
+	Texture itemstexture[5];
 	itemstexture[0].loadFromFile("textures/Item/t1.png"); //ซ้อมยาน
 	itemstexture[1].loadFromFile("textures/Item/t2.png"); //โล่
 	itemstexture[2].loadFromFile("textures/Item/t3.png"); //เพิมกระสุน
 	itemstexture[3].loadFromFile("textures/Item/t4.png"); //เพิ่มความเร็วยาน
+	itemstexture[4].loadFromFile("textures/Item/t5.png");
 
 	Texture shieldFx;
 	shieldFx.loadFromFile("textures/Fx/Fx2.png");
@@ -53,38 +54,53 @@ int main()
 	string player_name;
 	Text name_text;
 	name_text.setFont(font);
-	name_text.setCharacterSize(24);
-	name_text.setPosition(Vector2f(100.0f, 25.0f));
+	name_text.setCharacterSize(30);
+	name_text.setPosition(Vector2f(70.0f, 38.0f));
 	name_text.setFillColor(Color::White);
+	//กรอบข้อความชื่อ
+	Texture framena_texture;
+	Sprite framena_button;
+	framena_texture.loadFromFile("textures/Button/button.png");
+	framena_button.setTexture(framena_texture);
+	framena_button.setPosition(Vector2f(35, 20));
+	framena_button.setScale(Vector2f(1.f, 0.7f));
 
 	//ฟอนต์score
 	Text scoretext;
 	//score
 	scoretext.setFont(font);
 	scoretext.setCharacterSize(30);
-	scoretext.setPosition(Vector2f(1740.0f, 20.0f));
+	scoretext.setPosition(Vector2f(1700.0f, 37.0f));
 	scoretext.setFillColor(Color::White);
 	int score = 0;
+
+	//กรอบข้อความ
+	Texture frame_texture;
+	Sprite frame_button;
+	frame_texture.loadFromFile("textures/Button/button.png");
+	frame_button.setTexture(frame_texture);
+	frame_button.setPosition(Vector2f(1660, 20));
+	frame_button.setScale(Vector2f(1.0f, 0.7f));
 
 	//textlevel
 	Text Lvl;
 	Lvl.setFont(font);
 	Lvl.setCharacterSize(15);
-	Lvl.setPosition(Vector2f(20.0f, 40.0f));
+	Lvl.setPosition(Vector2f(20.0f, 105.0f));
 	Lvl.setFillColor(Color::White);
 
 	//Hp
 	Text Hp;
 	Hp.setFont(font);
 	Hp.setCharacterSize(15);
-	Hp.setPosition(Vector2f(20.0f, 20.0f));
+	Hp.setPosition(Vector2f(20.0f, 85.0f));
 	Hp.setFillColor(Color::White);
 
 	Text scorebullet;
 	//scorebullet
 	scorebullet.setFont(font);
 	scorebullet.setCharacterSize(15);
-	scorebullet.setPosition(Vector2f(55.0f, 55.0f));
+	scorebullet.setPosition(Vector2f(55.0f, 125.0f));
 	scorebullet.setFillColor(Color::White);
 
 	//หลอดเลเวล
@@ -92,6 +108,9 @@ int main()
 	RectangleShape LvbulbMax;
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
+
+	
+
 
 	Clock clock;
 	int level = 1;
@@ -101,6 +120,9 @@ int main()
 	int maxMeteorite = 0;
 	int Maxbulletammo = 100; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
+
+	bool upgrade = false;
+	int upgradetime = 0;
 
 	float speed = 0.f;
 	float showtime = 0.0f;
@@ -181,8 +203,25 @@ int main()
 
 			if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f && bulletammo > 0)
 			{
-				bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation()));
-				bulletammo--;
+				if (upgrade == true && upgradetime > 0)
+				{
+					bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation() - 5));
+					bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation()));
+					bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation() + 5));
+				}
+				else
+				{
+					bullets.push_back(Bullet(&shot, rocket->spacecraft.getPosition(), rocket->spacecraft.getRotation()));
+				}
+
+				if (upgrade == true && upgradetime > 0)
+				{
+					bulletammo -= 3;
+				}
+				else
+				{
+					bulletammo--;
+				}
 				bullettime = 0.0f;
 			}
 			if (sumtime >= 2.0f && !stopSpawn)
@@ -193,31 +232,31 @@ int main()
 				case 1:
 					type = 1;
 					requireToKill = 5;
-					maxMeteorite = 0;
+					maxMeteorite = 2;
 					break;
 
 				case 2:
 					type = 2;
 					requireToKill = 7;
-					maxMeteorite = 1;
+					maxMeteorite = 4;
 					break;
 
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 4;
+					maxMeteorite = 6;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					maxMeteorite = 5;
+					maxMeteorite = 6;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					maxMeteorite = 6;
+					maxMeteorite = 7;
 					break;
 
 				case 6:
@@ -269,10 +308,10 @@ int main()
 			//หลอด lv ผู้เล่น
 			float LvBar = (float)enemykill / requireToKill;
 			Lvbulb.setSize(Vector2f(LvBar * 200.0f, 10.0f));
-			Lvbulb.setPosition(Vector2f(60.0f, 45.0f));
+			Lvbulb.setPosition(Vector2f(60.0f, 112.0f));
 			Lvbulb.setScale(Vector2f(2.0, 0.50));
 			LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
-			LvbulbMax.setPosition(Vector2f(60.0f, 45.0f));
+			LvbulbMax.setPosition(Vector2f(60.0f, 112.0f));
 			LvbulbMax.setScale(Vector2f(2.0, 0.50));
 			//ทำคะแนน
 			cout << score << endl;
@@ -284,6 +323,7 @@ int main()
 
 			//ทำตัวเลือด
 			Hp.setString("Hp");
+			//กรอบข้อความ
 
 			//Level
 			Lvl.setString("Lvl " + to_string(level));
@@ -361,13 +401,13 @@ int main()
 					}
 
 					//Spawn Item
-					int rand_item = rand() % 300;
+					int rand_item = rand() % 50;
 					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
 					{
-						int r = rand() % 4; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
+						int r = rand() % 5; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
 						items.push_back(Item(&itemstexture[r], enemies[i].getPosition(), r));
 					}
-					
+
 					enemies.erase(enemies.begin() + i);
 					break;
 				}
@@ -412,7 +452,7 @@ int main()
 					meteorites.erase(meteorites.begin() + i);
 					break;
 				}
-				if(meteorites[i].getPosition().y > window.getSize().y)
+				if (meteorites[i].getPosition().y > window.getSize().y)
 				{
 					meteorites.erase(meteorites.begin() + i);
 					break;
@@ -440,6 +480,10 @@ int main()
 					case 3:
 						isSpeed = 1;
 						break;
+					case 4:
+						upgrade = true;
+						upgradetime = 1200;
+						break;
 					default:
 						break;
 					}
@@ -452,7 +496,7 @@ int main()
 					break;
 				}
 			}
-
+			upgradetime--;
 			//Update Stop Spawn Time
 			if (stopSpawn)
 			{
@@ -519,7 +563,7 @@ int main()
 				Fitems.renderItem(window);
 			}
 
-			if(rocket->getHp() <= 0)
+			if (rocket->getHp() <= 0)
 			{
 				enemies.clear();
 				meteorites.clear();
@@ -532,7 +576,8 @@ int main()
 
 			rocket->draw(window);
 
-
+			window.draw(frame_button);
+			window.draw(framena_button);
 			window.draw(scoretext);
 			window.draw(scorebullet);
 			window.draw(Hp);
