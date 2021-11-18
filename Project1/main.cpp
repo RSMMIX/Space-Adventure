@@ -597,11 +597,11 @@ int main()
 			window.draw(scorebullet);
 			window.draw(Hp);
 			window.draw(Lvl);
+			window.draw(name_text);
 
 			window.draw(LvbulbMax);
 			window.draw(Lvbulb);
 
-			window.draw(name_text);
 
 			window.display();
 			break;
