@@ -5,7 +5,7 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 	this->Maxhp = Hp;
 	this->Hp = Hp;
 	this->randomtype = randomtype;
-	this->type_4_time = 0.0f;
+	this->type_3_time = 0.0f;
 	Level = Level;
 	
 	spacecraft.setTexture(spaceship);
@@ -40,8 +40,8 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 	}
 	if (randomtype == 3)
 	{
-		position.x = rand() % 1000 + 100;
-		type_4_y = 0.0f;
+		position.x = rand() % 1080;
+		type_3_y = 0.0f;
 	}
 
 	spacecraft.setPosition(position);
@@ -58,8 +58,8 @@ void Enemy::update(float deltaTime, Vector2f position)
 {
 	if (randomtype == 3)
 	{
-		type_4_x = sinf(type_4_time += deltaTime) * 300.0f;
-		spacecraft.setPosition((type_4_x) + (this->position.x + (4.5 - randomtype) * 500.f), type_4_y -= deltaTime * speed * -100.0f);
+		type_3_x = sinf(type_3_time += deltaTime) * 300.0f;
+		spacecraft.setPosition((type_3_x) + (this->position.x + (5 - randomtype) * 500.f), type_3_y -= deltaTime * speed * -100.0f);
 	}
 	else
 	{

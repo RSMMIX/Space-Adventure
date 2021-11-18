@@ -41,9 +41,9 @@ private:
 	float Maxhp;
 	float speed;
 	float enemydamage;
-	float type_4_x;
-	float type_4_y;
-	float type_4_time;
+	float type_3_x;
+	float type_3_y;
+	float type_3_time;
 	int Level;
 	int randomtype;
 };

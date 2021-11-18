@@ -71,6 +71,15 @@ class Menu
         Texture blackpa_texture;
         Sprite  blackpa_button;
 
+        //bgleaderboards
+        Texture leader_texture;
+        Sprite leader_sprite;
+
+        //button backleaderboards
+        Texture backlea_texture;
+        Sprite  backlea_button;
+
+        
         bool type_bounce;
         bool valid_name;
 
@@ -105,8 +114,13 @@ class Menu
 
         void updateGameOver();
 
-        void remderGameOver();
+        void renderGameOver();
 
         void checktriggerPause();
+
+        void updateleaderboards();
+
+        void renderleaderboards();
+
 };
 

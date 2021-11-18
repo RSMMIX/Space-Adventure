@@ -1,0 +1,10 @@
+pawn
+210
+pawnnnnnnnnnnnn
+200
+
+160
+mo
+150
+playyyyy
+90

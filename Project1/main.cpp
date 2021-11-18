@@ -7,10 +7,16 @@
 #include "Meteorite.h"
 #include "Menu.h"
 #include <vector>
+
+ScoreData scoreData[6];
+
 int main()
 {
 	srand(time_t(static_cast<unsigned>(NULL)));
 	RenderWindow window(VideoMode(1920, 1080), "Adventure Shooting Dragons In Space", Style::Fullscreen | Style::Titlebar);
+
+	readScoreFile();
+
 	Menu menu(&window);
 	vector<Bullet> bullets;
 	vector<Enemy> enemies;
@@ -176,12 +182,16 @@ int main()
 			menu.updateName();
 			menu.updateNameInput(ev);
 			menu.renderName();
-			player_name = menu.getName();
-			name_text.setString(player_name);
+			name_text.setOrigin(Vector2f(name_text.getGlobalBounds().width, name_text.getGlobalBounds().height) / 2.f);
+			name_text.setPosition(Vector2f(165.0f, 48.0f));
 			break;
-		case 3://face pauseport
+		case 7://face pauseport
 			menu.updatePause();
 			menu.renderPause();
+			break;
+		case 3:
+			menu.updateleaderboards();
+			menu.renderleaderboards();
 			break;
 		case 4://How to play
 			menu.updateHow();
@@ -192,8 +202,9 @@ int main()
 			break;
 		case 6://Game over
 			menu.updateGameOver();
-			menu.remderGameOver();
+			menu.renderGameOver();
 			break;
+	   
 		case 2://Play 
 			sumtime += deltaTime;
 			showtime += deltaTime;
@@ -232,7 +243,7 @@ int main()
 				case 1:
 					type = 1;
 					requireToKill = 5;
-					maxMeteorite = 2;
+					maxMeteorite = 1;
 					break;
 
 				case 2:
@@ -353,7 +364,7 @@ int main()
 						break;
 
 					case 2:
-						score += 30;
+						score += 40;
 						Maxbulletammo += 20;
 						break;
 
@@ -363,7 +374,7 @@ int main()
 						break;
 
 					case 4:
-						score += 65;
+						score += 75;
 						Maxbulletammo += 20;
 						break;
 
@@ -373,7 +384,7 @@ int main()
 						break;
 
 					case 6:
-						score += 85;
+						score += 95;
 						Maxbulletammo += 20;
 						break;
 
@@ -383,7 +394,7 @@ int main()
 						break;
 
 					case 8:
-						score += 115;
+						score += 125;
 						Maxbulletammo += 20;
 						break;
 					case 9:
@@ -391,7 +402,7 @@ int main()
 						Maxbulletammo += 100;
 						break;
 					case 10:
-						score += 150;
+						score += 180;
 						Maxbulletammo += 20;
 						break;
 
@@ -401,7 +412,7 @@ int main()
 					}
 
 					//Spawn Item
-					int rand_item = rand() % 50;
+					int rand_item = rand() % 300;
 					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
 					{
 						int r = rand() % 5; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
@@ -565,6 +576,10 @@ int main()
 
 			if (rocket->getHp() <= 0)
 			{
+				// save
+				addScore(player_name, score);
+
+				// reset
 				enemies.clear();
 				meteorites.clear();
 				bullets.clear();

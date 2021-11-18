@@ -1,6 +1,6 @@
-#include "Menu.h"
+﻿#include "Menu.h"
 
-Menu::Menu(sf::RenderWindow* window)
+Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตัวอักษรไม่แสดงผลหน้าเกม แก้เพียบ
 {
     this->window = window;
 
@@ -42,12 +42,14 @@ Menu::Menu(sf::RenderWindow* window)
 	font.loadFromFile("fonts/Blern regular.ttf");
 	name_input.setFont(font);
 	name_input.setCharacterSize(60);
-	name_input.setOrigin(Vector2f(0,name_input.getLocalBounds().height / 2 ));
-	name_input.setPosition(Vector2f(770, 425));
+	name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width, name_input.getGlobalBounds().height) / 2.f);
+	//name_input.setOrigin(Vector2f(0,name_input.getLocalBounds().height / 2 ));
+	name_input.setPosition(Vector2f(830, 425));
 
 	//name creator name
 	name_creator.setFont(font);
 	name_creator.setCharacterSize(30);
+	name_creator.setOrigin(Vector2f(name_creator.getGlobalBounds().width, name_creator.getGlobalBounds().height) / 2.f);
 	name_creator.setPosition(Vector2f(1450, 15));
 
 	//howtoplay
@@ -83,7 +85,19 @@ Menu::Menu(sf::RenderWindow* window)
 	playpa_button.setTexture(playpa_texture);
 	playpa_button.setPosition(Vector2f(20, 900));
 
+	//bgleaderboards
+	leader_texture.loadFromFile("textures/menu/leaderboards.jpg");
+	leader_sprite.setTexture(leader_texture);
+
+	//button backleaderboards 0611014263
+	backlea_texture.loadFromFile("textures/Button/back.png");
+	backlea_button.setTexture(backlea_texture);
+	backlea_button.setOrigin(Vector2f(backlea_button.getLocalBounds().width / 2, backlea_button.getLocalBounds().height / 2));
+	backlea_button.setPosition(Vector2f(960, 980));
+
 	escape_bounce = 0;
+
+
 
 }
 
@@ -118,6 +132,7 @@ void Menu::checktriggerPause()
 	}
 }
 
+
 void Menu::updateMenu()
 {
 		name_creator.setString(" 64010726 RATTANAPORN SOMCHAINUEK ");
@@ -127,6 +142,7 @@ void Menu::updateMenu()
 			play_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(1);
 			}
 		}
@@ -141,6 +157,7 @@ void Menu::updateMenu()
 			tutorial_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(4);
 			}
 		}
@@ -156,7 +173,10 @@ void Menu::updateMenu()
 			score_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				//this->updateMenuState(3);
+
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				readScoreFile();
+				updateMenuState(3);
 			}
 		}
 		else
@@ -170,6 +190,7 @@ void Menu::updateMenu()
 			quit_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 			    updateMenuState(5);
 			}
 		}
@@ -199,7 +220,7 @@ void Menu::updateNameInput(sf::Event& event)
 				{
 					player_name.erase(player_name.length() - 1);
 				}
-				else if (event.text.unicode < 128 && player_name.length() < 15 && event.text.unicode != 8)
+				else if (event.text.unicode < 128 && player_name.length() < 8 && event.text.unicode != 8)
 				{
 					player_name += static_cast<char>(event.text.unicode);
 				}
@@ -219,6 +240,7 @@ void Menu::updateName()
 			go_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(2);
 			}
 		}
@@ -232,6 +254,7 @@ void Menu::updateName()
 			back_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(0);
 			}
 		}
@@ -241,6 +264,34 @@ void Menu::updateName()
 		}
 }
 
+void Menu::updateleaderboards()
+{
+	if (backlea_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	{
+		backlea_button.setScale(sf::Vector2f(1.1f, 1.1f));
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			updateMenuState(0);
+		}
+	}
+	else
+	{
+		backov_button.setScale(sf::Vector2f(1.0f, 1.0f));
+	}
+}
+
+
+void Menu::renderleaderboards()
+{
+	window->clear();
+
+	window->draw(leader_sprite);
+	window->draw(backlea_button);
+
+	window->display();
+}
+
 void Menu::updateHow()
 {
 	if (howback_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
@@ -248,6 +299,7 @@ void Menu::updateHow()
 			howback_button.setScale(sf::Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(0);
 			}
 		}
@@ -290,6 +342,7 @@ void Menu::updatePause()
 		playpa_button.setScale(sf::Vector2f(1.1f, 1.1f));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
 			updateMenuState(2);
 		}
 	}
@@ -303,6 +356,7 @@ void Menu::updatePause()
 		blackpa_button.setScale(sf::Vector2f(1.1f, 1.1f));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
 			updateMenuState(0);
 		}
 	}
@@ -330,6 +384,7 @@ void Menu::updateGameOver()
 		backov_button.setScale(sf::Vector2f(1.1f, 1.1f));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
 			updateMenuState(0);
 		}
 	}
@@ -339,7 +394,7 @@ void Menu::updateGameOver()
 	}
 }
 
-void Menu::remderGameOver()
+void Menu::renderGameOver()
 {
 	window->clear();
 
