@@ -334,7 +334,8 @@ int main()
 
 			//ทำตัวเลือด
 			Hp.setString("Hp");
-			//กรอบข้อความ
+			
+			
 
 			//Level
 			Lvl.setString("Lvl " + to_string(level));
