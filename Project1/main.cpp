@@ -591,17 +591,17 @@ int main()
 
 			rocket->draw(window);
 
-			window.draw(frame_button);
+
 			window.draw(framena_button);
 			window.draw(scoretext);
 			window.draw(scorebullet);
 			window.draw(Hp);
 			window.draw(Lvl);
-			window.draw(name_text);
 
 			window.draw(LvbulbMax);
 			window.draw(Lvbulb);
 
+			window.draw(name_text);
 
 			window.display();
 			break;
