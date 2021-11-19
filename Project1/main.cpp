@@ -115,9 +115,6 @@ int main()
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
 
-	
-
-
 	Clock clock;
 	int level = 1;
 	int requireToKill = 5;
@@ -184,6 +181,7 @@ int main()
 			menu.renderName();
 			name_text.setOrigin(Vector2f(name_text.getGlobalBounds().width, name_text.getGlobalBounds().height) / 2.f);
 			name_text.setPosition(Vector2f(165.0f, 48.0f));
+			name_text.setString(menu.getName());
 			break;
 		case 7://face pauseport
 			menu.updatePause();
@@ -334,8 +332,6 @@ int main()
 
 			//ทำตัวเลือด
 			Hp.setString("Hp");
-			
-			
 
 			//Level
 			Lvl.setString("Lvl " + to_string(level));
@@ -352,7 +348,6 @@ int main()
 						enemykill = 0;
 						level++;
 						rocket->setHp(rocket->getMaxhp());
-						//Maxbulletammo += 15; //เพิ่มกระสุนแต่ละเวล
 						bulletammo = Maxbulletammo;
 						cout << level << endl;
 					}
@@ -578,20 +573,29 @@ int main()
 			if (rocket->getHp() <= 0)
 			{
 				// save
-				addScore(player_name, score);
+				addScore(menu.getName(), score);
 
 				// reset
+				score = 0;
 				enemies.clear();
 				meteorites.clear();
 				bullets.clear();
 				items.clear();
+				delete rocket;
+				Player* rocket = new Player(spaceship, 100);
+
+				level = 1;
+				requireToKill = 5;
+				enemykill = 0;
+				maxMeteorite = 0;
+				Maxbulletammo = 100; //จำนวนกรสุน
+				bulletammo = Maxbulletammo;
 
 				//delete 
 				menu.updateMenuState(6);
 			}
 
 			rocket->draw(window);
-
 
 			window.draw(framena_button);
 			window.draw(frame_button);

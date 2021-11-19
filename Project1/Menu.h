@@ -74,6 +74,9 @@ class Menu
         //bgleaderboards
         Texture leader_texture;
         Sprite leader_sprite;
+        Text text_num[5];
+        Text text_name[5];
+        Text text_score[5];
 
         //button backleaderboards
         Texture backlea_texture;

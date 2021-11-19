@@ -88,6 +88,26 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 	//bgleaderboards
 	leader_texture.loadFromFile("textures/menu/leaderboards.jpg");
 	leader_sprite.setTexture(leader_texture);
+	for(int i=0;i<5;i++)
+	{
+		text_num[i].setFont(font);
+		text_num[i].setCharacterSize(16);
+		text_num[i].setString(to_string(i+1));
+		text_num[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_num[i].setPosition(Vector2f(400.f,400.f + 30.f*i));
+
+		text_name[i].setFont(font);
+		text_name[i].setCharacterSize(16);
+		text_name[i].setString("");
+		text_name[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_name[i].setPosition(Vector2f(500.f,400.f + 30.f*i));
+		
+		text_score[i].setFont(font);
+		text_score[i].setCharacterSize(16);
+		text_score[i].setString("");
+		text_score[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_score[i].setPosition(Vector2f(700.f,400.f + 30.f*i));
+	}
 
 	//button backleaderboards 0611014263
 	backlea_texture.loadFromFile("textures/Button/back.png");
@@ -206,8 +226,8 @@ void Menu::updateNameInput(sf::Event& event)
 	if (player_name == "" && !(ev.type == sf::Event::TextEntered))
 	{
 		name_input.setString("Type your name");
-		//name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width, name_input.getGlobalBounds().height) / 2.f);
-		//name_input.setPosition(Vector2f(1000, 500));
+		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2 , name_input.getGlobalBounds().height / 2));
+		name_input.setPosition(Vector2f(1050, 450));
 		type_bounce = 0;
 		valid_name = 0;
 	}
@@ -240,7 +260,7 @@ void Menu::updateName()
 	if (go_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
 			go_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player_name != "")
 			{
 				while (Mouse::isButtonPressed(sf::Mouse::Left));
 				updateMenuState(2);
@@ -268,6 +288,12 @@ void Menu::updateName()
 
 void Menu::updateleaderboards()
 {
+	for(int i=0;i<5;i++)
+	{
+		text_name[i].setString(scoreData[i].name);
+
+		text_score[i].setString(to_string(scoreData[i].score));
+	}
 	if (backlea_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 	{
 		backlea_button.setScale(sf::Vector2f(1.1f, 1.1f));
@@ -290,6 +316,13 @@ void Menu::renderleaderboards()
 
 	window->draw(leader_sprite);
 	window->draw(backlea_button);
+
+	for(int i=0;i<5;i++)
+	{
+		window->draw(text_num[i]);
+		window->draw(text_name[i]);
+		window->draw(text_score[i]);
+	}
 
 	window->display();
 }

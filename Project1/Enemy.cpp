@@ -46,7 +46,6 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 
 	spacecraft.setPosition(position);
 	direction = rotateVector(Vector2f(0, -1), spacecraft.getRotation());
-	//momentum = 200.0f;
 	speed = 0.5f;
 }
 
@@ -60,7 +59,6 @@ void Enemy::update(float deltaTime, Vector2f position)
 	{
 		type_3_x = sinf(type_3_time += deltaTime) * 300.0f;
 		spacecraft.setPosition((type_3_x) + (this->position.x + (5 - randomtype)), type_3_y -= deltaTime * speed * -100.0f);
-	//	spacecraft.setPosition((type_3_x) + (this->position.x + (5 - randomtype) * 700.f), type_3_y -= deltaTime * speed * -100.0f);
 	}
 	else
 	{
