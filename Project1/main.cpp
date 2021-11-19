@@ -249,55 +249,55 @@ int main()
 				case 2:
 					type = 2;
 					requireToKill = 7;
-					maxMeteorite = 4;
+					maxMeteorite = 2;
 					break;
 
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 6;
+					maxMeteorite = 3;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					maxMeteorite = 6;
+					maxMeteorite = 4;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					maxMeteorite = 7;
+					maxMeteorite = 5;
 					break;
 
 				case 6:
 					type = 4;
 					requireToKill = 19;
-					maxMeteorite = 7;
+					maxMeteorite = 6;
 					break;
 
 				case 7:
 					type = 5;
 					requireToKill = 21;
-					maxMeteorite = 8;
+					maxMeteorite = 7;
 					break;
 
 				case 8:
 					type = 6;
 					requireToKill = 25;
-					maxMeteorite = 9;
+					maxMeteorite = 8;
 					break;
 
 				case 9:
 					type = 7;
 					requireToKill = 31;
-					maxMeteorite = 10;
+					maxMeteorite = 9;
 					break;
 
 				case 10:
 					type = 7;
 					requireToKill = 41;
-					maxMeteorite = 11;
+					maxMeteorite = 10;
 					break;
 
 				default:
@@ -594,6 +594,7 @@ int main()
 
 
 			window.draw(framena_button);
+			window.draw(frame_button);
 			window.draw(scoretext);
 			window.draw(scorebullet);
 			window.draw(Hp);
