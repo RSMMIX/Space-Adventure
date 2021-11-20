@@ -62,14 +62,14 @@ class Menu
         Sprite  backov_button;
 
         //bg paus
-        Texture bgpa_texture;
-        Sprite bgpa_sprite;
+        Texture bgpaus_texture;
+        Sprite bgpaus_sprite;
         //button playpase
-        Texture playpa_texture;
-        Sprite  playpa_button;
+        Texture playpase_texture;
+        Sprite  playpase_button;
         //button backpase
-        Texture blackpa_texture;
-        Sprite  blackpa_button;
+        Texture backpase_texture;
+        Sprite  backpase_button;
 
         //bgleaderboards
         Texture leader_texture;
@@ -93,9 +93,9 @@ class Menu
 
         string getName();
         
-        void updateMenuState(int action);
-
         int getMenuState();
+
+        void updateMenuState(int action);
 
         void updateMenu();
 

@@ -14,9 +14,7 @@ int main()
 {
 	srand(time_t(static_cast<unsigned>(NULL)));
 	RenderWindow window(VideoMode(1920, 1080), "Adventure Shooting Dragons In Space", Style::Fullscreen | Style::Titlebar);
-
 	readScoreFile();
-
 	Menu menu(&window);
 	vector<Bullet> bullets;
 	vector<Enemy> enemies;
@@ -115,14 +113,7 @@ int main()
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
 
-	//เสียง
-	/*SoundBuffer Sound1;
-	Sound1.loadFromFile("Sound/sound_bg.wav");
-	Sound sound;
-	sound.setBuffer(Sound1);
-	sound.setVolume(50);
-	sound.setLoop(true);
-	sound.play();*/
+	
 
 	Clock clock;
 	int level = 1;
@@ -195,6 +186,7 @@ int main()
 		case 7://face pauseport
 			menu.updatePause();
 			menu.renderPause();
+			
 			break;
 		case 3:
 			menu.updateleaderboards();
@@ -210,10 +202,10 @@ int main()
 		case 6://Game over
 			menu.updateGameOver();
 			menu.renderGameOver();
+
 			break;
 	   
 		case 2://Play 
-
 			sumtime += deltaTime;
 			showtime += deltaTime;
 			bullettime += deltaTime;
@@ -251,7 +243,7 @@ int main()
 				case 1:
 					type = 1;
 					requireToKill = 5;
-					maxMeteorite = 1;
+					maxMeteorite = 0;
 					break;
 
 				case 2:
@@ -263,49 +255,49 @@ int main()
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 4;
+					maxMeteorite = 3;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					maxMeteorite = 4;
+					maxMeteorite = 3;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					maxMeteorite = 5;
+					maxMeteorite = 4;
 					break;
 
 				case 6:
 					type = 4;
 					requireToKill = 19;
-					maxMeteorite = 6;
+					maxMeteorite = 4;
 					break;
 
 				case 7:
 					type = 5;
 					requireToKill = 21;
-					maxMeteorite = 7;
+					maxMeteorite = 5;
 					break;
 
 				case 8:
 					type = 6;
 					requireToKill = 25;
-					maxMeteorite = 8;
+					maxMeteorite = 5;
 					break;
 
 				case 9:
 					type = 7;
 					requireToKill = 31;
-					maxMeteorite = 9;
+					maxMeteorite = 6;
 					break;
 
 				case 10:
 					type = 7;
 					requireToKill = 41;
-					maxMeteorite = 10;
+					maxMeteorite = 6;
 					break;
 
 				default:
@@ -333,7 +325,7 @@ int main()
 			LvbulbMax.setPosition(Vector2f(60.0f, 112.0f));
 			LvbulbMax.setScale(Vector2f(2.0, 0.50));
 			//ทำคะแนน
-			cout << score << endl;
+			//cout << score << endl;
 			background.update(deltaTime);
 			scoretext.setString(" SCORE  " + to_string(score));
 
@@ -491,7 +483,6 @@ int main()
 						isShield = 1;
 						break;
 					case 2:
-						//extraLife++;
 						bulletammo += 50;
 						break;
 					case 3:
@@ -553,7 +544,7 @@ int main()
 				}
 			}
 			else
-				rocket->setSpeed(300.f); //200
+				rocket->setSpeed(300.f); 
 
 			window.clear();
 
@@ -591,10 +582,12 @@ int main()
 				meteorites.clear();
 				bullets.clear();
 				items.clear();
+				background.reset();
+				
 				
 				delete rocket;
 				Player* rocket = new Player(spaceship, 100);
-
+				
 				level = 1;
 				requireToKill = 5;
 				enemykill = 0;
@@ -604,6 +597,7 @@ int main()
 
 				//delete 
 				menu.updateMenuState(6);
+				cout << 6 << endl;
 			}
 
 			rocket->draw(window);

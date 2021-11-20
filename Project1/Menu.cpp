@@ -43,7 +43,6 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 	name_input.setFont(font);
 	name_input.setCharacterSize(60);
 	name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width, name_input.getGlobalBounds().height) / 2.f);
-	//name_input.setOrigin(Vector2f(0,name_input.getLocalBounds().height / 2 ));
 	name_input.setPosition(Vector2f(830, 425));
 
 	//name creator name
@@ -72,18 +71,18 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 	backov_button.setPosition(Vector2f(960, 840));
 
 	//bg paus
-	bgpa_texture.loadFromFile("textures/menu/gameover.jpg");
-	bgpa_sprite.setTexture(bgpa_texture);
+	bgpaus_texture.loadFromFile("textures/menu/pause.jpg");
+	bgpaus_sprite.setTexture(bgpaus_texture);
 
 	//button playpase
-	blackpa_texture.loadFromFile("textures/menu/back.png");
-	blackpa_button.setTexture(blackpa_texture);
-	blackpa_button.setPosition(Vector2f(20, 900));
+	backpase_texture.loadFromFile("textures/Button/back.png");
+	backpase_button.setTexture(backpase_texture);
+	backpase_button.setPosition(Vector2f(120, 500));
 
 	//button playpase
-	playpa_texture.loadFromFile("textures/menu/resume.png");
-	playpa_button.setTexture(playpa_texture);
-	playpa_button.setPosition(Vector2f(20, 900));
+	playpase_texture.loadFromFile("textures/Button/resume.png");
+	playpase_button.setTexture(playpase_texture);
+	playpase_button.setPosition(Vector2f(200, 700));
 
 	//bgleaderboards
 	leader_texture.loadFromFile("textures/menu/leaderboards.jpg");
@@ -109,7 +108,7 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 		text_score[i].setPosition(Vector2f(1280.f,330.f + 120.f*i));
 	}
 
-	//button backleaderboards 0611014263
+	//button backleaderboards 
 	backlea_texture.loadFromFile("textures/Button/back.png");
 	backlea_button.setTexture(backlea_texture);
 	backlea_button.setOrigin(Vector2f(backlea_button.getLocalBounds().width / 2, backlea_button.getLocalBounds().height / 2));
@@ -143,7 +142,8 @@ void Menu::checktriggerPause()
 		if (!escape_bounce)
 		{
 			escape_bounce = 1;
-			updateMenuState(6);
+			updateMenuState(7);
+			
 		}
 	}
 	else
@@ -258,32 +258,32 @@ void Menu::updateNameInput(sf::Event& event)
 void Menu::updateName()
 {
 	if (go_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	{
+		go_button.setScale(sf::Vector2f(1.1f, 1.1f));
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player_name != "")
 		{
-			go_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player_name != "")
-			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
-				updateMenuState(2);
-			}
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			updateMenuState(2);
 		}
-		else
-		{
-			go_button.setScale(sf::Vector2f(1.0f, 1.0f));
-		}
+	}
+	else
+	{
+		go_button.setScale(sf::Vector2f(1.0f, 1.0f));
+	}
 
 	if (back_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	{
+		back_button.setScale(sf::Vector2f(1.1f, 1.1f));
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			back_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
-				updateMenuState(0);
-			}
+			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			updateMenuState(0);
 		}
-		else
-		{
-			back_button.setScale(sf::Vector2f(1.0f, 1.0f));
-		}
+	}
+	else
+	{
+		back_button.setScale(sf::Vector2f(1.0f, 1.0f));
+	}
 }
 
 void Menu::updateleaderboards()
@@ -372,42 +372,43 @@ void Menu::renderMenu()
 
 void Menu::updatePause()
 {
-	if (playpa_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-	{
-		playpa_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (playpase_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
-			updateMenuState(2);
+			playpase_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				updateMenuState(2);
+			}
 		}
-	}
-	else
-	{
-		playpa_button.setScale(sf::Vector2f(1.0f, 1.0f));
-	}
 
-	if (blackpa_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-	{
-		blackpa_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		else
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
-			updateMenuState(0);
+			playpase_button.setScale(sf::Vector2f(1.0f, 1.0f));
 		}
-	}
-	else
-	{
-		blackpa_button.setScale(sf::Vector2f(1.0f, 1.0f));
-	}
+
+		if (backpase_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		{
+			backpase_button.setScale(sf::Vector2f(1.1f, 1.1f));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				updateMenuState(0);
+			}
+		}
+		else
+		{
+			backpase_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		}
 }
 
 void Menu::renderPause()
 {
 	window->clear();
 
-	window->draw(bgpa_sprite);
-	window->draw(playpa_button);
-	window->draw(blackpa_button);
+	window->draw(bgpaus_sprite);
+	window->draw(playpase_button);
+	window->draw(backpase_button);
 
 	window->display();
 }

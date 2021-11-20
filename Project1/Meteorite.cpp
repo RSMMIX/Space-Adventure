@@ -2,10 +2,13 @@
 Meteorite::Meteorite(Texture* meteorite_texture)
 {
     metorite_sprite.setTexture(*meteorite_texture);
-    metorite_sprite.setPosition(sf::Vector2f(rand() % 1880,0.f));
-    metorite_sprite.setScale(Vector2f(0.6f ,0.7f));
-    speed = 300.f;
-	metoriteDamage = 50;
+    metorite_sprite.getPosition().x > 20;
+    metorite_sprite.getPosition().x < 1880;
+    metorite_sprite.setPosition(sf::Vector2f(rand() % 1850, 0.f));
+    metorite_sprite.setScale(Vector2f(0.6f, 0.7f));
+    speed = 350.f;
+    metoriteDamage = 50;
+   
 }
 
 void Meteorite::update(float deltaTime)

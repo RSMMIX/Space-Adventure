@@ -9,6 +9,7 @@ public:
 
 	void update(float deltaTime);
 	void draw(RenderWindow& window);
+	void reset();
 private:
 	RenderWindow* window;
 

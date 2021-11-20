@@ -47,3 +47,10 @@ void Background::draw(RenderWindow& window)
 		window.draw(backgrounds[i]);
 	}
 }
+
+void Background::reset()
+{
+	backgrounds.clear();
+	backgrounds.push_back(background1);
+	backgrounds.push_back(background2);
+}
