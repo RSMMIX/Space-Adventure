@@ -226,7 +226,7 @@ void Menu::updateNameInput(sf::Event& event)
 	if (player_name == "" && !(ev.type == sf::Event::TextEntered))
 	{
 		name_input.setString("Type your name");
-		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2 , name_input.getGlobalBounds().height / 2));
+		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2, name_input.getGlobalBounds().height / 2));
 		name_input.setPosition(Vector2f(1020, 450));
 		type_bounce = 0;
 		valid_name = 0;
