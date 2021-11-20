@@ -113,7 +113,6 @@ int main()
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
 
-	
 
 	Clock clock;
 	int level = 1;
@@ -325,7 +324,7 @@ int main()
 			LvbulbMax.setPosition(Vector2f(60.0f, 112.0f));
 			LvbulbMax.setScale(Vector2f(2.0, 0.50));
 			//ทำคะแนน
-			//cout << score << endl;
+			cout << score << endl;
 			background.update(deltaTime);
 			scoretext.setString(" SCORE  " + to_string(score));
 
@@ -597,7 +596,6 @@ int main()
 
 				//delete 
 				menu.updateMenuState(6);
-				cout << 6 << endl;
 			}
 
 			rocket->draw(window);

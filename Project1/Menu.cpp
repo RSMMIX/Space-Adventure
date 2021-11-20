@@ -75,14 +75,14 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 	bgpaus_sprite.setTexture(bgpaus_texture);
 
 	//button playpase
-	backpase_texture.loadFromFile("textures/Button/back.png");
+	backpase_texture.loadFromFile("textures/Button/button4.png");
 	backpase_button.setTexture(backpase_texture);
-	backpase_button.setPosition(Vector2f(120, 500));
+	backpase_button.setPosition(Vector2f(1060, 500));
 
 	//button playpase
 	playpase_texture.loadFromFile("textures/Button/resume.png");
 	playpase_button.setTexture(playpase_texture);
-	playpase_button.setPosition(Vector2f(200, 700));
+	playpase_button.setPosition(Vector2f(360, 500));
 
 	//bgleaderboards
 	leader_texture.loadFromFile("textures/menu/leaderboards.jpg");
@@ -393,7 +393,7 @@ void Menu::updatePause()
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				while (Mouse::isButtonPressed(sf::Mouse::Left));
-				updateMenuState(0);
+				updateMenuState(5);
 			}
 		}
 		else
