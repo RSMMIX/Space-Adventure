@@ -115,6 +115,15 @@ int main()
 	Lvbulb.setFillColor(Color(0, 204, 204));
 	LvbulbMax.setFillColor(Color(0, 102, 204));
 
+	//เสียง
+	/*SoundBuffer Sound1;
+	Sound1.loadFromFile("Sound/sound_bg.wav");
+	Sound sound;
+	sound.setBuffer(Sound1);
+	sound.setVolume(50);
+	sound.setLoop(true);
+	sound.play();*/
+
 	Clock clock;
 	int level = 1;
 	int requireToKill = 5;
@@ -204,6 +213,7 @@ int main()
 			break;
 	   
 		case 2://Play 
+
 			sumtime += deltaTime;
 			showtime += deltaTime;
 			bullettime += deltaTime;
@@ -253,7 +263,7 @@ int main()
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 3;
+					maxMeteorite = 4;
 					break;
 
 				case 4:
@@ -581,6 +591,7 @@ int main()
 				meteorites.clear();
 				bullets.clear();
 				items.clear();
+				
 				delete rocket;
 				Player* rocket = new Player(spaceship, 100);
 
