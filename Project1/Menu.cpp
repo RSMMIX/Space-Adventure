@@ -91,22 +91,22 @@ Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตั�
 	for(int i=0;i<5;i++)
 	{
 		text_num[i].setFont(font);
-		text_num[i].setCharacterSize(16);
+		text_num[i].setCharacterSize(70);
 		text_num[i].setString(to_string(i+1));
 		text_num[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
-		text_num[i].setPosition(Vector2f(400.f,400.f + 30.f*i));
+		text_num[i].setPosition(Vector2f(550.f,330.f + 120.f*i));
 
 		text_name[i].setFont(font);
-		text_name[i].setCharacterSize(16);
+		text_name[i].setCharacterSize(70);
 		text_name[i].setString("");
 		text_name[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
-		text_name[i].setPosition(Vector2f(500.f,400.f + 30.f*i));
+		text_name[i].setPosition(Vector2f(600.f,330.f + 120.f*i));
 		
 		text_score[i].setFont(font);
-		text_score[i].setCharacterSize(16);
+		text_score[i].setCharacterSize(70);
 		text_score[i].setString("");
 		text_score[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
-		text_score[i].setPosition(Vector2f(700.f,400.f + 30.f*i));
+		text_score[i].setPosition(Vector2f(1280.f,330.f + 120.f*i));
 	}
 
 	//button backleaderboards 0611014263
@@ -227,7 +227,7 @@ void Menu::updateNameInput(sf::Event& event)
 	{
 		name_input.setString("Type your name");
 		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2 , name_input.getGlobalBounds().height / 2));
-		name_input.setPosition(Vector2f(1050, 450));
+		name_input.setPosition(Vector2f(1020, 450));
 		type_bounce = 0;
 		valid_name = 0;
 	}
