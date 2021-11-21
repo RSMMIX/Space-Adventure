@@ -9,6 +9,7 @@ public:
 	RectangleShape spacecraft;
 
 	void update(float deltaTime);
+
 	void draw(RenderWindow& window);
 
 	FloatRect getGlobalBounds() 

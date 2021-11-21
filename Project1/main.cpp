@@ -204,6 +204,7 @@ int main()
 		case 6://Game over
 			menu.updateGameOver();
 			menu.renderGameOver();
+
 			break;
 	   
 		case 2://Play 

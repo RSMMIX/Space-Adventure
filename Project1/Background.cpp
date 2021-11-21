@@ -51,6 +51,8 @@ void Background::draw(RenderWindow& window)
 void Background::reset()
 {
 	backgrounds.clear();
+
 	backgrounds.push_back(background1);
+
 	backgrounds.push_back(background2);
 }
