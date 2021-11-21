@@ -74,6 +74,7 @@ void Player::update(float deltaTime)
 	Hpbulb.setSize(Vector2f(Hpbar * 200.0f, 10.0f));
 	Hpbulb.setPosition(Vector2f(60.0f , 92.0f));
 	Hpbulb.setScale(Vector2f(2.0, 0.50));
+
 	//หลอดเลือดแต่ซ้อนกันเป็น 2 มิติ
 	HpbulbMax.setSize(Vector2f(200.0f, 10.0f));
 	HpbulbMax.setPosition(Vector2f(60.0f , 92.0f));

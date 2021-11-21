@@ -35,15 +35,26 @@ public:
 
 private:
 	int random;
+
 	Vector2f position , direction;
+
 	Sprite enemy;
-	float Hp;
-	float Maxhp;
-	float speed;
-	float enemydamage;
-	float type_3_x;
-	float type_3_y;
-	float type_3_time;
+
 	int Level;
+
 	int randomtype;
+
+	float Hp;
+
+	float Maxhp;
+
+	float speed;
+
+	float enemydamage;
+
+	float type_3_x;
+
+	float type_3_y;
+
+	float type_3_time;
 };
