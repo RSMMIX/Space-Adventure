@@ -323,8 +323,8 @@ int main()
 			LvbulbMax.setSize(Vector2f(200.0f, 10.0f));
 			LvbulbMax.setPosition(Vector2f(60.0f, 112.0f));
 			LvbulbMax.setScale(Vector2f(2.0, 0.50));
+
 			//ทำคะแนน
-			cout << score << endl;
 			background.update(deltaTime);
 			scoretext.setString(" SCORE  " + to_string(score));
 
@@ -348,16 +348,14 @@ int main()
 					{
 						enemykill = 0;
 						level++;
-						rocket->setHp(rocket->getMaxhp());
+						rocket->setHp(20);
 						bulletammo = Maxbulletammo;
-						cout << level << endl;
 					}
 					// กำหนดคะแนนแต่ละเลเวล
 					switch (level)
 					{
 					case 1:
 						score += 30;
-						Maxbulletammo += 20;
 						break;
 
 					case 2:
@@ -396,7 +394,7 @@ int main()
 						break;
 					case 9:
 						score += 150;
-						Maxbulletammo += 100;
+						Maxbulletammo += 20;
 						break;
 					case 10:
 						score += 180;
@@ -507,7 +505,7 @@ int main()
 			//Update Stop Spawn Time
 			if (stopSpawn)
 			{
-				if (stopSpawnDelay < 3.0f)
+				if (stopSpawnDelay < 3.5f)
 					stopSpawnDelay += deltaTime;
 				else
 				{
