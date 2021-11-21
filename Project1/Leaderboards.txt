@@ -4,7 +4,7 @@ moji
 2660
 pawn
 2065
+r
+1895
 moji
 1660
-moji
-1360

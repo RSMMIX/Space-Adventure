@@ -8,26 +8,34 @@ public:
 	~Enemy();
 	
 	RectangleShape spacecraft;
+
 	RectangleShape denemy;
+
 	RectangleShape denemyMax;
 
 	void update(float deltaTime, Vector2f position);
+
 	void draw(RenderWindow& window);
+
 	float getdamage();
+
 	int getlevel();
 	
 	FloatRect getGlobalBounds() 
 	{ 
 		return spacecraft.getGlobalBounds(); 
 	}
+
 	Vector2f getPosition() 
 	{ 
 		return spacecraft.getPosition(); 
 	}
+
 	void setHp(int damage) 
 	{ 
 		Hp -= damage; 
 	}
+
 	int getHp() 
 	{ 
 		return Hp; 

@@ -125,9 +125,9 @@ string Menu::getName()
 	return player_name;
 }
 
-void Menu::updateMenuState(int action)
+void Menu::updateMenuState(int actions)
 {
-    action = action;
+    action = actions;
 }
 
 int Menu::getMenuState()
@@ -157,13 +157,15 @@ void Menu::updateMenu()
 {
 		name_creator.setString(" 64010726 RATTANAPORN SOMCHAINUEK ");
         //Play
-		if (play_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (play_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
 		{
 			play_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				//cout << 7 << endl;
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(1);
+				cout << getMenuState() << endl;
 			}
 		}
 		else
@@ -172,12 +174,12 @@ void Menu::updateMenu()
 		}
 
 		//Tutorial
-		if (tutorial_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (tutorial_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			tutorial_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(4);
 			}
 		}
@@ -188,13 +190,13 @@ void Menu::updateMenu()
 		
 
 		//Score
-		if (score_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (score_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			score_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				readScoreFile();
 				updateMenuState(3);
 			}
@@ -205,12 +207,12 @@ void Menu::updateMenu()
 		}
 
 		//Quit
-		if (quit_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (quit_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			quit_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 			    updateMenuState(5);
 			}
 		}
@@ -257,12 +259,12 @@ void Menu::updateNameInput(Event& event)
 
 void Menu::updateName()
 {
-	if (go_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+	if (go_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 	{
 		go_button.setScale(Vector2f(1.1f, 1.1f));
-		if (Mouse::isButtonPressed(Mouse::Left) && player_name != "")
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player_name != "")
 		{
-			while (Mouse::isButtonPressed(Mouse::Left));
+			while (sf::Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(2);
 		}
 	}
@@ -271,18 +273,18 @@ void Menu::updateName()
 		go_button.setScale(Vector2f(1.0f, 1.0f));
 	}
 
-	if (back_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+	if (back_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 	{
 		back_button.setScale(Vector2f(1.1f, 1.1f));
-		if (Mouse::isButtonPressed(Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(:Mouse::Left));
+			while (sf::Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(0);
 		}
 	}
 	else
 	{
-		back_button.setScale(:Vector2f(1.0f, 1.0f));
+		back_button.setScale(sf::Vector2f(1.0f, 1.0f));
 	}
 }
 
@@ -294,12 +296,12 @@ void Menu::updateleaderboards()
 
 		text_score[i].setString(to_string(scoreData[i].score));
 	}
-	if (backlea_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+	if (backlea_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 	{
 		backlea_button.setScale(Vector2f(1.1f, 1.1f));
-		if (Mouse::isButtonPressed(Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(Mouse::Left));
+			while (sf::Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(0);
 		}
 	}
@@ -329,12 +331,12 @@ void Menu::renderleaderboards()
 
 void Menu::updateHow()
 {
-	if (howback_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+	if (howback_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			howback_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(0);
 			}
 		}
@@ -372,12 +374,12 @@ void Menu::renderMenu()
 
 void Menu::updatePause()
 {
-		if (playpase_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (playpase_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			playpase_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(2);
 			}
 		}
@@ -387,12 +389,12 @@ void Menu::updatePause()
 			playpase_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 
-		if (backpase_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+		if (backpase_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 		{
 			backpase_button.setScale(Vector2f(1.1f, 1.1f));
-			if (Mouse::isButtonPressed(Mouse::Left))
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(Mouse::Left));
+				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(5);
 			}
 		}
@@ -415,12 +417,12 @@ void Menu::renderPause()
 
 void Menu::updateGameOver()
 {
-	if (backov_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
+	if (backov_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
 	{
 		backov_button.setScale(Vector2f(1.1f, 1.1f));
-		if (Mouse::isButtonPressed(Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(Mouse::Left));
+			while (sf::Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(0);
 		}
 	}

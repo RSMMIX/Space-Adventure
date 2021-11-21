@@ -53,7 +53,7 @@ int main()
 
 	Font font;
 	font.loadFromFile("fonts/Blern regular.ttf");
-
+	
 	//Player Name //set***
 	string player_name;
 	Text name_text;
@@ -123,6 +123,7 @@ int main()
 	int Maxbulletammo = 100; //จำนวนกรสุน
 	int bulletammo = Maxbulletammo;
 
+
 	bool upgrade = false;
 	int upgradetime = 0;
 
@@ -131,6 +132,7 @@ int main()
 	float deltaTime = 0;
 	float sumtime = 0;
 	float bullettime = 0;
+	float time_enemy = 0;
 
 	bool stopSpawn = 1;
 	float stopSpawnDelay = 0.0f;
@@ -152,6 +154,8 @@ int main()
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
+
+
 		Event ev;
 
 		while (window.pollEvent(ev))
@@ -209,10 +213,12 @@ int main()
 	   
 		case 2://Play 
 			sumtime += deltaTime;
+			time_enemy += deltaTime;
 			showtime += deltaTime;
 			bullettime += deltaTime;
 
 			menu.checktriggerPause();
+
 
 			if (Keyboard::isKeyPressed(Keyboard::Space) && bullettime >= 0.1f && bulletammo > 0)
 			{
@@ -237,7 +243,7 @@ int main()
 				}
 				bullettime = 0.0f;
 			}
-			if (sumtime >= 2.0f && !stopSpawn)
+			if (sumtime >= 3.0f && !stopSpawn)
 			{
 				//เลเวล
 				switch (level)
@@ -308,6 +314,10 @@ int main()
 				}
 				//สุ่มให้เกิดทิศทางไหน
 				enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
+				if(time_enemy >= 60)
+				{
+					enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
+				}
 				sumtime = 0.f;
 			}
 			//Spawn Meteorite
@@ -352,7 +362,7 @@ int main()
 						enemykill = 0;
 						level++;
 						rocket->setHp(20);
-						bulletammo = Maxbulletammo;
+						bulletammo += 20;
 					}
 					// กำหนดคะแนนแต่ละเลเวล
 					switch (level)
@@ -363,45 +373,36 @@ int main()
 
 					case 2:
 						score += 40;
-						Maxbulletammo += 20;
 						break;
 
 					case 3:
 						score += 65;
-						Maxbulletammo += 20;
 						break;
 
 					case 4:
 						score += 75;
-						Maxbulletammo += 20;
 						break;
 
 					case 5:
 						score += 85;
-						Maxbulletammo += 20;
 						break;
 
 					case 6:
 						score += 95;
-						Maxbulletammo += 20;
 						break;
 
 					case 7:
 						score += 115;
-						Maxbulletammo += 20;
 						break;
 
 					case 8:
 						score += 125;
-						Maxbulletammo += 20;
 						break;
 					case 9:
 						score += 150;
-						Maxbulletammo += 20;
 						break;
 					case 10:
 						score += 180;
-						Maxbulletammo += 20;
 						break;
 
 					default:
@@ -410,7 +411,7 @@ int main()
 					}
 
 					//Spawn Item
-					int rand_item = rand() % 300;
+					int rand_item = rand() % 350;
 					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
 					{
 						int r = rand() % 5; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
@@ -483,7 +484,7 @@ int main()
 						isShield = 1;
 						break;
 					case 2:
-						bulletammo += 50;
+						bulletammo += 30;
 						break;
 					case 3:
 						isSpeed = 1;
@@ -594,6 +595,7 @@ int main()
 				maxMeteorite = 0;
 				Maxbulletammo = 100; //จำนวนกรสุน
 				bulletammo = Maxbulletammo;
+				time_enemy = 0;
 
 				//delete 
 				menu.updateMenuState(6);
