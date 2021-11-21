@@ -89,7 +89,7 @@ class Menu
         bool escape_bounce;
 
     public:
-        Menu(sf::RenderWindow* window);
+        Menu(RenderWindow* window);
 
         string getName();
         

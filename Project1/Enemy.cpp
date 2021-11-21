@@ -38,6 +38,7 @@ Enemy::Enemy(Texture* spaceship, int Hp, int level ,int randomtype)
 		position.x = 2020;
 		position.y = rand() % 1080;
 	}
+
 	if (randomtype == 3)
 	{
 		position.x = rand() % 1700;

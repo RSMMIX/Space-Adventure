@@ -1,6 +1,6 @@
 ﻿#include "Menu.h"
 
-Menu::Menu(sf::RenderWindow* window) //แก้ตัวอักษร ตัวอักษรไม่แสดงผลหน้าเกม แก้เพียบ
+Menu::Menu(RenderWindow* window) //แก้ตัวอักษร ตัวอักษรไม่แสดงผลหน้าเกม แก้เพียบ
 {
     this->window = window;
 
@@ -127,7 +127,7 @@ string Menu::getName()
 
 void Menu::updateMenuState(int action)
 {
-    this->action = action;
+    action = action;
 }
 
 int Menu::getMenuState()
@@ -137,7 +137,7 @@ int Menu::getMenuState()
 
 void Menu::checktriggerPause()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	if (Keyboard::isKeyPressed(Keyboard::Escape))
 	{
 		if (!escape_bounce)
 		{
@@ -157,73 +157,73 @@ void Menu::updateMenu()
 {
 		name_creator.setString(" 64010726 RATTANAPORN SOMCHAINUEK ");
         //Play
-		if (play_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (play_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			play_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			play_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(1);
 			}
 		}
 		else
 		{
-			play_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			play_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 
 		//Tutorial
-		if (tutorial_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (tutorial_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			tutorial_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			tutorial_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(4);
 			}
 		}
 		else
 		{
-			tutorial_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			tutorial_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 		
 
 		//Score
-		if (score_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (score_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			score_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			score_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
 
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				readScoreFile();
 				updateMenuState(3);
 			}
 		}
 		else
 		{
-			score_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			score_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 
 		//Quit
-		if (quit_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (quit_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			quit_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			quit_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 			    updateMenuState(5);
 			}
 		}
 		else
 		{
-			quit_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			quit_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 }
 
-void Menu::updateNameInput(sf::Event& event)
+void Menu::updateNameInput(Event& event)
 {
 	ev = event;
-	if (player_name == "" && !(ev.type == sf::Event::TextEntered))
+	if (player_name == "" && !(ev.type == Event::TextEntered))
 	{
 		name_input.setString("Type your name");
 		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2, name_input.getGlobalBounds().height / 2));
@@ -233,9 +233,9 @@ void Menu::updateNameInput(sf::Event& event)
 	}
 	else
 	{
-		if (event.type == sf::Event::TextEntered)
+		if (event.type == Event::TextEntered)
 		{
-			if (event.text.unicode != 32 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !this->type_bounce)
+			if (event.text.unicode != 32 && !Keyboard::isKeyPressed(Keyboard::Enter) && !this->type_bounce)
 			{
 				type_bounce = 1;
 				if (event.text.unicode == 8 && player_name.length() > 0)
@@ -257,32 +257,32 @@ void Menu::updateNameInput(sf::Event& event)
 
 void Menu::updateName()
 {
-	if (go_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	if (go_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 	{
-		go_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && player_name != "")
+		go_button.setScale(Vector2f(1.1f, 1.1f));
+		if (Mouse::isButtonPressed(Mouse::Left) && player_name != "")
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			while (Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(2);
 		}
 	}
 	else
 	{
-		go_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		go_button.setScale(Vector2f(1.0f, 1.0f));
 	}
 
-	if (back_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	if (back_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 	{
-		back_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		back_button.setScale(Vector2f(1.1f, 1.1f));
+		if (Mouse::isButtonPressed(Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			while (Mouse::isButtonPressed(:Mouse::Left));
 			updateMenuState(0);
 		}
 	}
 	else
 	{
-		back_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		back_button.setScale(:Vector2f(1.0f, 1.0f));
 	}
 }
 
@@ -294,18 +294,18 @@ void Menu::updateleaderboards()
 
 		text_score[i].setString(to_string(scoreData[i].score));
 	}
-	if (backlea_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	if (backlea_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 	{
-		backlea_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		backlea_button.setScale(Vector2f(1.1f, 1.1f));
+		if (Mouse::isButtonPressed(Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			while (Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(0);
 		}
 	}
 	else
 	{
-		backov_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		backov_button.setScale(Vector2f(1.0f, 1.0f));
 	}
 }
 
@@ -329,18 +329,18 @@ void Menu::renderleaderboards()
 
 void Menu::updateHow()
 {
-	if (howback_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	if (howback_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			howback_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			howback_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(0);
 			}
 		}
 		else
 		{
-			howback_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			howback_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 }
 
@@ -372,33 +372,33 @@ void Menu::renderMenu()
 
 void Menu::updatePause()
 {
-		if (playpase_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (playpase_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			playpase_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			playpase_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(2);
 			}
 		}
 
 		else
 		{
-			playpase_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			playpase_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 
-		if (backpase_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+		if (backpase_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 		{
-			backpase_button.setScale(sf::Vector2f(1.1f, 1.1f));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			backpase_button.setScale(Vector2f(1.1f, 1.1f));
+			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				while (Mouse::isButtonPressed(sf::Mouse::Left));
+				while (Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(5);
 			}
 		}
 		else
 		{
-			backpase_button.setScale(sf::Vector2f(1.0f, 1.0f));
+			backpase_button.setScale(Vector2f(1.0f, 1.0f));
 		}
 }
 
@@ -415,18 +415,18 @@ void Menu::renderPause()
 
 void Menu::updateGameOver()
 {
-	if (backov_button.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
+	if (backov_button.getGlobalBounds().contains(Vector2f(Mouse::getPosition())))
 	{
-		backov_button.setScale(sf::Vector2f(1.1f, 1.1f));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		backov_button.setScale(Vector2f(1.1f, 1.1f));
+		if (Mouse::isButtonPressed(Mouse::Left))
 		{
-			while (Mouse::isButtonPressed(sf::Mouse::Left));
+			while (Mouse::isButtonPressed(Mouse::Left));
 			updateMenuState(0);
 		}
 	}
 	else
 	{
-		backov_button.setScale(sf::Vector2f(1.0f, 1.0f));
+		backov_button.setScale(Vector2f(1.0f, 1.0f));
 	}
 }
 

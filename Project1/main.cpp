@@ -174,6 +174,7 @@ int main()
 			menu.updateMenu();
 			menu.renderMenu();
 			break;
+
 		case 1://Name
 			menu.updateName();
 			menu.updateNameInput(ev);
@@ -182,6 +183,7 @@ int main()
 			name_text.setPosition(Vector2f(165.0f, 48.0f));
 			name_text.setString(menu.getName());
 			break;
+
 		case 7://face pauseport
 			menu.updatePause();
 			menu.renderPause();
@@ -195,13 +197,13 @@ int main()
 			menu.updateHow();
 			menu.renderHow();
 			break;
+
 		case 5:
 			window.close();
 			break;
 		case 6://Game over
 			menu.updateGameOver();
 			menu.renderGameOver();
-
 			break;
 	   
 		case 2://Play 
