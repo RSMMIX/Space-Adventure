@@ -263,49 +263,49 @@ int main()
 				case 3:
 					type = 2;
 					requireToKill = 9;
-					maxMeteorite = 3;
+					maxMeteorite = 2;
 					break;
 
 				case 4:
 					type = 3;
 					requireToKill = 11;
-					maxMeteorite = 3;
+					maxMeteorite = 2;
 					break;
 
 				case 5:
 					type = 3;
 					requireToKill = 15;
-					maxMeteorite = 4;
+					maxMeteorite = 2;
 					break;
 
 				case 6:
 					type = 4;
 					requireToKill = 19;
-					maxMeteorite = 4;
+					maxMeteorite = 3;
 					break;
 
 				case 7:
 					type = 5;
 					requireToKill = 21;
-					maxMeteorite = 5;
+					maxMeteorite = 3;
 					break;
 
 				case 8:
 					type = 6;
 					requireToKill = 25;
-					maxMeteorite = 5;
+					maxMeteorite = 3;
 					break;
 
 				case 9:
 					type = 7;
 					requireToKill = 31;
-					maxMeteorite = 6;
+					maxMeteorite = 3;
 					break;
 
 				case 10:
 					type = 7;
 					requireToKill = 41;
-					maxMeteorite = 6;
+					maxMeteorite = 3;
 					break;
 
 				default:
@@ -314,8 +314,9 @@ int main()
 				}
 				//สุ่มให้เกิดทิศทางไหน
 				enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
-				if(time_enemy >= 60)
+				if(time_enemy >= 30)
 				{
+					enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
 					enemies.push_back(Enemy(&enemy[rand() % type], 10, level, rand() % 3 + 1));
 				}
 				sumtime = 0.f;
@@ -342,7 +343,7 @@ int main()
 			scoretext.setString(" SCORE  " + to_string(score));
 
 			//ทำตัวเลขกระสุน
-			scorebullet.setString(" AMMO  " + to_string(bulletammo));
+			scorebullet.setString(" AMMO  " + to_string((int)bulletammo));
 
 			//ทำตัวเลือด
 			Hp.setString("Hp");
@@ -362,7 +363,7 @@ int main()
 						enemykill = 0;
 						level++;
 						rocket->setHp(20);
-						bulletammo += 20;
+						bulletammo += 30;
 					}
 					// กำหนดคะแนนแต่ละเลเวล
 					switch (level)
@@ -411,7 +412,7 @@ int main()
 					}
 
 					//Spawn Item
-					int rand_item = rand() % 350;
+					int rand_item = rand() % 200;
 					if (rand_item >= 0 && rand_item < 50) //สุ่ม 4แบบ
 					{
 						int r = rand() % 5; // สุ่มแล้วเก็บเข้าตัวแปรเพราะใช้หลายครั้ง
@@ -484,7 +485,7 @@ int main()
 						isShield = 1;
 						break;
 					case 2:
-						bulletammo += 30;
+						bulletammo += 50;
 						break;
 					case 3:
 						isSpeed = 1;

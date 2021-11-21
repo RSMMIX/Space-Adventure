@@ -42,7 +42,7 @@ Menu::Menu(RenderWindow* window) //แก้ตัวอักษร ตัว�
 	font.loadFromFile("fonts/Blern regular.ttf");
 	name_input.setFont(font);
 	name_input.setCharacterSize(60);
-	name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width, name_input.getGlobalBounds().height) / 2.f);
+	name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2, name_input.getGlobalBounds().height) / 2.f);
 	name_input.setPosition(Vector2f(830, 425));
 
 	//name creator name
@@ -87,24 +87,25 @@ Menu::Menu(RenderWindow* window) //แก้ตัวอักษร ตัว�
 	//bgleaderboards
 	leader_texture.loadFromFile("textures/menu/leaderboards.jpg");
 	leader_sprite.setTexture(leader_texture);
-	for(int i=0;i<5;i++)
+	for(int i = 0; i < 5; i++)
 	{
+	
 		text_num[i].setFont(font);
 		text_num[i].setCharacterSize(70);
 		text_num[i].setString(to_string(i+1));
-		text_num[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_num[i].setOrigin(Vector2f(0,text_num[i].getLocalBounds().height / 2));
 		text_num[i].setPosition(Vector2f(550.f,330.f + 120.f*i));
 
 		text_name[i].setFont(font);
 		text_name[i].setCharacterSize(70);
 		text_name[i].setString("");
-		text_name[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_name[i].setOrigin(Vector2f(0,text_num[i].getLocalBounds().height / 2));
 		text_name[i].setPosition(Vector2f(600.f,330.f + 120.f*i));
 		
 		text_score[i].setFont(font);
 		text_score[i].setCharacterSize(70);
 		text_score[i].setString("");
-		text_score[i].setOrigin(Vector2f(text_num[i].getLocalBounds().width / 2,text_num[i].getLocalBounds().height / 2));
+		text_score[i].setOrigin(Vector2f(0,text_num[i].getLocalBounds().height / 2));
 		text_score[i].setPosition(Vector2f(1280.f,330.f + 120.f*i));
 	}
 
@@ -235,6 +236,7 @@ void Menu::updateNameInput(Event& event)
 	}
 	else
 	{
+		name_input.setOrigin(Vector2f(name_input.getGlobalBounds().width / 2, name_input.getGlobalBounds().height / 2));
 		if (event.type == Event::TextEntered)
 		{
 			if (event.text.unicode != 32 && !Keyboard::isKeyPressed(Keyboard::Enter) && !this->type_bounce)
@@ -307,7 +309,7 @@ void Menu::updateleaderboards()
 	}
 	else
 	{
-		backov_button.setScale(Vector2f(1.0f, 1.0f));
+		backlea_button.setScale(Vector2f(1.0f, 1.0f));
 	}
 }
 
@@ -332,18 +334,18 @@ void Menu::renderleaderboards()
 void Menu::updateHow()
 {
 	if (howback_button.getGlobalBounds().contains(Vector2f(sf::Mouse::getPosition())))
-		{
+	{
 			howback_button.setScale(Vector2f(1.1f, 1.1f));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				while (sf::Mouse::isButtonPressed(Mouse::Left));
 				updateMenuState(0);
 			}
-		}
-		else
-		{
-			howback_button.setScale(Vector2f(1.0f, 1.0f));
-		}
+	}
+	else
+	{
+		howback_button.setScale(Vector2f(1.0f, 1.0f));
+	}
 }
 
 void Menu::renderName()
